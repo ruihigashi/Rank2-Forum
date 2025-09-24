@@ -1,10 +1,10 @@
 import { Module } from '@nestjs/common';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { AppController } from './app.controller';
-import { AppService } from './app.service';
-import { UserModule } from './user/user.module';
-import { PostModule } from './post/post.module';
-import { AuthModule } from './auth/auth.module';
+import { AppController } from './app.controller.js';
+import { AppService } from './app.service.js';
+import { UserModule } from './user/user.module.js';
+import { PostModule } from './post/post.module.js';
+import { AuthModule } from './auth/auth.module.js';
 
 @Module({
   imports: [
@@ -14,7 +14,7 @@ import { AuthModule } from './auth/auth.module';
       username: process.env.DB_USER,
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
-      autoLoadEntities: true,
+      autoLoadEntities: true, // entitiesオプションにエンティティクラスを一つずつ追加しなくても、自動でエンティティを検出してくれる便利な設定
       synchronize: false,
     }),
     UserModule,

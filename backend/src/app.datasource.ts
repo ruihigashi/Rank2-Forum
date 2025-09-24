@@ -1,5 +1,7 @@
-import { DataSource } from "typeorm"
-require("dotenv").config();
+import { DataSource } from "typeorm";
+import * as dotenv from 'dotenv'
+
+dotenv.config();
 
 const AppDataSource = new DataSource({
     type: "postgres", // 使用するデータベースの種類

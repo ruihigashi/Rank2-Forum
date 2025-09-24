@@ -1,8 +1,12 @@
 import { Module } from '@nestjs/common';
-import { AuthController } from './auth.controller';
-import { AuthService } from './auth.service';
+import { AuthController } from './auth.controller.js';
+import { AuthService } from './auth.service.js';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { Auth } from 'src/entities/auth.js';
+import { User } from 'src/entities/user.entity.js';
 
 @Module({
+  imports: [TypeOrmModule.forFeature([Auth, User])], //  このモジュール限定で、特定のテーブル（エンティティ）を操作する許可を申請する
   controllers: [AuthController],
   providers: [AuthService]
 })
