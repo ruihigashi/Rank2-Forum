@@ -1,7 +1,13 @@
-import { useState } from "react"
+import { useContext, useState } from "react"
+import { UserContext } from "../providers/UserProvider";
 
 export default function SideBar() {
     const [msg, setMsg] = useState("");
+    const { userInfo } = useContext(UserContext); // コンテキストからuserInfoを取り出す
+    const onSendClick = () => {
+        console.log("onSendClick");
+        console.log(userInfo); // 値の確認
+    }
 
     return (
         <div>
@@ -15,7 +21,7 @@ export default function SideBar() {
                 ></textarea>
             </div>
             <div>
-                <button>送信</button>
+                <button onClick={onSendClick}>送信</button>
             </div>
         </div>
     )

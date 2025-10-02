@@ -1,18 +1,25 @@
-import { useState } from "react"
+import { useState, useContext } from "react"
 
 import { sign_in } from '../api/Auth';
 import { useNavigate } from "react-router-dom";
+import { UserContext } from "../providers/UserProvider"; 
 
 export default function SignIn() {
     const navigate = useNavigate(); // navigateオブジェクトの作成
     const [userId, setUserId] = useState(''); // ユーザーIDを保持するstate
     const [pass, setPass] = useState(''); // パスワードを保持するstate
+    const { setUserInfo } = useContext(UserContext); //setUserInfoの取り出し
 
     const onSignInClick = async() => {
         const ret = await sign_in(userId, pass);
         
         if (ret && ret.token) {
-            navigate('main'); // メイン画面に遷移
+            // setUserInfoを使用してコンテキストにユーザー情報を保存する
+            setUserInfo({
+                id: ret.user_id, 
+                token: ret.token,
+            });
+            navigate('/main'); // メイン画面に遷移
         }
     }
 

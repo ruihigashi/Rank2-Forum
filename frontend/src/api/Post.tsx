@@ -10,10 +10,10 @@ const post = async (user_id: string, token: string, msg: string) => {
     
 }
 
-export default function Post() {
     const getList = async (token: string) => {
-        const url = 'http://localhost:3001/post?token=${token}&records=10';
+        const url = `http://43.207.191.124:3001/post?token=${token}&records=10`;
         const res = await axios.get(url);
         return res.data;
     }
-};
+
+export { post, getList }
