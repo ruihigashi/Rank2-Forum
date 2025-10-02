@@ -1,7 +1,8 @@
-import { useContext } from "react"
+import { useContext, useEffect } from "react"
 import { PostListContext, PostType } from "../providers/PostListContext"
 import { UserContext } from "../providers/UserProvider";
 import { getList } from "../api/Post";
+import Post from "./Post";
 
 export default function PostList() {
     // ポストリストコンテキスト、ユーザーコンテキストを使用する
@@ -10,9 +11,13 @@ export default function PostList() {
 
     // ポスト一覧を取得する関数
     const getPostList = async () => {
-        const posts = await getList(userInfo.token);
+        const posts = await
+         getList(userInfo.token);
         console.log(posts)
     }
+    useEffect(() => {
+        getPostList();
+    }, [])
 
     // getListで取得したポスト配列をコンテキストに保存する
     let postList: Array<PostType> = [];
@@ -27,4 +32,13 @@ export default function PostList() {
         });
     }
     setPostList(postList);
+
+    return (
+        <div>
+            <p>PostList</p>
+            {postList.map((p) => (
+                <Post key={p.id} post={p}/>
+            ))}
+        </div>
+    )
 }
