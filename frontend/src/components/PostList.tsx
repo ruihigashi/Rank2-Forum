@@ -6,9 +6,8 @@ import Post from "./Post";
 
 export default function PostList() {
     // ポストリストコンテキスト、ユーザーコンテキストを使用する
-    const { postList } = useContext(PostListContext);
+    const { postList, setPostList } = useContext(PostListContext);
     const { userInfo } = useContext(UserContext);
-    const { setPostList } = useContext(PostListContext);
 
     // ポスト一覧を取得する関数
     const getPostList = async () => {
@@ -17,9 +16,9 @@ export default function PostList() {
         console.log(posts)
 
         // getListで取得したポスト配列をコンテキストに保存する
-        let postList: Array<PostType> = [];
+        let fetchedPosts: Array<PostType> = [];
         if (posts) {
-            posts.forEach((p: any) => {
+            posts.forEach((p: PostType) => {
                 postList.push({
                     id: p.id,
                     user_name: p.user_name,
@@ -28,7 +27,7 @@ export default function PostList() {
                 });
             });
         }
-        setPostList(postList);
+        setPostList(fetchedPosts);
     }
 
     // 描画時にポスト一覧を取得する
@@ -39,8 +38,8 @@ export default function PostList() {
     return (
         <div>
             <p>PostList</p>
-            {postList.map((p) => (
-                <Post key={p.id} post={p} />
+            {postList.map((p: PostType) => (
+            <Post key={p.id} post={p} />
             ))}
         </div>
     )
