@@ -4,7 +4,7 @@ import Header from "./Header";
 import SideBar from "./SideBar";
 import Contents from "./Contents";
 
-export default function Layout() {
+export default function MainLayout() {
     return (
         <>
             <SHeader>

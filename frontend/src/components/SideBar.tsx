@@ -1,7 +1,7 @@
 import { useContext, useState } from "react"
 import { UserContext } from "../providers/UserProvider";
 import { PostListContext, PostType } from "../providers/PostListContext";
-import { getList } from "../api/Post";
+import { post, getList } from "../api/Post";
 
 export default function SideBar() {
     const [msg, setMsg] = useState("");
@@ -23,13 +23,12 @@ export default function SideBar() {
                 });
             });
         }
-
         setPostList(postList);
-
     };
-    const onSendClick = () => {
-        console.log("onSendClick");
-        console.log(userInfo); // 値の確認
+    
+    const onSendClick = async () => {
+        await post(String(userInfo.id), userInfo.token, msg);
+        await getPostList();
     }
 
     return (

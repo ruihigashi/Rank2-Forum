@@ -8,10 +8,11 @@ import { UserProvider } from "./providers/UserProvider";
 function App() {
   return (
     <div className="App">
-      <Routes>
-        <Route path='/' element={<SignIn />} />
-        <Route path='/main' element={<Main />} />
-      </Routes>
+      <UserProvider>
+        <Routes>
+          <Route path='/' element={<SignIn />} />
+          <Route path='/main' element={<Main />} />
+        </Routes>
       </UserProvider>
     </div>
   );

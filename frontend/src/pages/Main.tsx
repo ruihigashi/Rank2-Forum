@@ -3,6 +3,7 @@ import Layout from '../components/MainLayout'
 import { PostListProvider } from '../providers/PostListContext'
 import { UserContext } from '../providers/UserProvider'
 import { Navigate } from 'react-router-dom';
+import MainLayout from '../components/MainLayout';
 
 export default function Main () {
     const { userInfo } = useContext(UserContext);
