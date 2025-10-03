@@ -1,7 +1,7 @@
 import { ForbiddenException, Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-import { Auth } from 'src/entities/auth.js';
-import { MicroPost } from 'src/entities/microposts.js';
+import { Auth } from 'src/entities/auth';
+import { MicroPost } from 'src/entities/microposts';
 import { Equal, MoreThan, Repository } from 'typeorm';
 
 @Injectable()

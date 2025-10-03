@@ -8,19 +8,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostModule = void 0;
 const common_1 = require("@nestjs/common");
-const post_controller_js_1 = require("./post.controller.js");
-const post_service_js_1 = require("./post.service.js");
+const post_controller_1 = require("./post.controller");
+const post_service_1 = require("./post.service");
 const typeorm_1 = require("@nestjs/typeorm");
-const microposts_js_1 = require("src/entities/microposts.js");
-const auth_js_1 = require("src/entities/auth.js");
+const microposts_1 = require("../entities/microposts");
+const auth_1 = require("../entities/auth");
 let PostModule = class PostModule {
 };
 exports.PostModule = PostModule;
 exports.PostModule = PostModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([microposts_js_1.MicroPost, auth_js_1.Auth])],
-        controllers: [post_controller_js_1.PostController],
-        providers: [post_service_js_1.PostService]
+        imports: [typeorm_1.TypeOrmModule.forFeature([microposts_1.MicroPost, auth_1.Auth])],
+        controllers: [post_controller_1.PostController],
+        providers: [post_service_1.PostService]
     })
 ], PostModule);
 //# sourceMappingURL=post.module.js.map

@@ -1,8 +1,8 @@
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
-import { Auth } from 'src/entities/auth.js';
-import { User } from 'src/entities/user.entity.js';
+import { Auth } from 'src/entities/auth';
+import { User } from 'src/entities/user.entity';
 import { Equal, MoreThan, Repository } from 'typeorm';
 
 @Injectable()

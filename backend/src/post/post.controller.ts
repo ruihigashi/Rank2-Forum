@@ -1,5 +1,5 @@
 import { Body, Controller, Get, Post, Query } from '@nestjs/common';
-import { PostService } from './post.service.js';
+import { PostService } from './post.service';
 import { NumericType } from 'typeorm';
 
 @Controller('post')
