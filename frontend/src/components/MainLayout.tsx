@@ -4,9 +4,10 @@ import Header from "./Header";
 import SideBar from "./SideBar";
 import Contents from "./Contents";
 
-export default function Layout() {
+export default function MainLayout() {
     return (
         <>
+        // この部分のみstyled-components使用（復習のため）
             <SHeader>
                 <Header></Header>
             </SHeader>

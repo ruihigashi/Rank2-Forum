@@ -1,5 +1,4 @@
-import { Dispatch, SetStateAction, useState } from "react";
-import { createContext } from "vm";
+import { Dispatch, SetStateAction, useState, createContext } from "react";
 
 // ポストを保持する型を定義
 export type PostType = {
@@ -9,7 +8,7 @@ export type PostType = {
     created_at: Date;
 }
 
-export const PostListContext = createContext (
+export const PostListContext = createContext(
     {} as {
         postList: PostType[]; // ポストの配列を保持
         setPostList: Dispatch<SetStateAction<PostType[]>>;
