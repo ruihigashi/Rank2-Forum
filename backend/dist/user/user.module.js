@@ -8,19 +8,19 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserModule = void 0;
 const common_1 = require("@nestjs/common");
-const user_controller_js_1 = require("./user.controller.js");
-const user_service_js_1 = require("./user.service.js");
+const user_controller_1 = require("./user.controller");
+const user_service_1 = require("./user.service");
 const typeorm_1 = require("@nestjs/typeorm");
-const user_entity_js_1 = require("src/entities/user.entity.js");
-const auth_js_1 = require("src/entities/auth.js");
+const user_entity_1 = require("../entities/user.entity");
+const auth_1 = require("../entities/auth");
 let UserModule = class UserModule {
 };
 exports.UserModule = UserModule;
 exports.UserModule = UserModule = __decorate([
     (0, common_1.Module)({
-        imports: [typeorm_1.TypeOrmModule.forFeature([user_entity_js_1.User, auth_js_1.Auth])],
-        controllers: [user_controller_js_1.UserController],
-        providers: [user_service_js_1.UserService]
+        imports: [typeorm_1.TypeOrmModule.forFeature([user_entity_1.User, auth_1.Auth])],
+        controllers: [user_controller_1.UserController],
+        providers: [user_service_1.UserService]
     })
 ], UserModule);
 //# sourceMappingURL=user.module.js.map

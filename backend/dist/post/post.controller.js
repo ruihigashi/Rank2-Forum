@@ -14,7 +14,7 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostController = void 0;
 const common_1 = require("@nestjs/common");
-const post_service_js_1 = require("./post.service.js");
+const post_service_1 = require("./post.service");
 let PostController = class PostController {
     postService;
     constructor(postService) {
@@ -47,6 +47,6 @@ __decorate([
 ], PostController.prototype, "getList", null);
 exports.PostController = PostController = __decorate([
     (0, common_1.Controller)('post'),
-    __metadata("design:paramtypes", [post_service_js_1.PostService])
+    __metadata("design:paramtypes", [post_service_1.PostService])
 ], PostController);
 //# sourceMappingURL=post.controller.js.map

@@ -49,8 +49,8 @@ exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
 const bcrypt = __importStar(require("bcrypt"));
-const auth_js_1 = require("src/entities/auth.js");
-const user_entity_js_1 = require("src/entities/user.entity.js");
+const auth_1 = require("../entities/auth");
+const user_entity_1 = require("../entities/user.entity");
 const typeorm_2 = require("typeorm");
 let UserService = class UserService {
     userRepository;
@@ -94,8 +94,8 @@ let UserService = class UserService {
 exports.UserService = UserService;
 exports.UserService = UserService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(user_entity_js_1.User)),
-    __param(1, (0, typeorm_1.InjectRepository)(auth_js_1.Auth)),
+    __param(0, (0, typeorm_1.InjectRepository)(user_entity_1.User)),
+    __param(1, (0, typeorm_1.InjectRepository)(auth_1.Auth)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         typeorm_2.Repository])
 ], UserService);
