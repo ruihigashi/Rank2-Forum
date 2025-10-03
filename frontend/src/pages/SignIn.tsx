@@ -1,5 +1,5 @@
-import SignInLayout from '../components/SignInLayout';
+import SignIn from '../components/SignIn';
 
-export default function SignIn() {
-    return <SignInLayout />;
+export default function SignInPage() {
+    return <SignIn/>;
 }

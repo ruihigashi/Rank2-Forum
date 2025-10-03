@@ -6,7 +6,7 @@ import { UserProvider } from "./providers/UserProvider";
 
 function App() {
   return (
-    <div className="App">
+    <div className="App bg-white min-h-screen">
       <UserProvider>
         <Routes>
           <Route path='/' element={<SignIn />} />
