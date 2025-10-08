@@ -44,8 +44,8 @@ export default function SideBar() {
     }, []);
     return (
         <div className="h-full border-r-2 border-gray-400 px-4 py-4">
-            <div className="">{userName}</div>
-            <div>{email}</div>
+            <div className="text-xl">{userName}</div>
+            <div className="text-xl">{email}</div>
             <div>
                 <textarea
                     rows={4}

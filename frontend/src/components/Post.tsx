@@ -1,6 +1,6 @@
 import React, { ReactNode } from "react";
 
-export default function Post(props: any) { 
+export default function Post(props: any) {
     const { children, post } = props;
     const getDateStr = (dateObj: Date) => {
         const year = post.created_at.getFullYear();
@@ -12,7 +12,7 @@ export default function Post(props: any) {
         return `${year}年${month}月${date}日 ${hour}時${min}分${sec}秒`;
     };
 
-    const getLines = (src: string):ReactNode => {
+    const getLines = (src: string): ReactNode => {
         return src.split('\n').map((line, index) => {
             return (
                 <React.Fragment key={index}>
@@ -24,10 +24,16 @@ export default function Post(props: any) {
     }
 
     return (
-        <div>
-            <div>{getDateStr(post.created_at)}</div>
-            <div>{post.user_name}</div>
-            <div>{getLines(post.content)}</div>
+        <div className="mb-4">
+            <div className="text-xl font-semibold">{post.user_name}</div>
+            <div className="border border-gray-900 rounded px-4 py-3 relative bg-white">
+                <div className="text-base text-gray-800 whitespace-pre-wrap">
+                    {getLines(post.content)}
+                </div>
+                <div className="absolute right-2 bottom-1 text-xs text-gray-500">
+                    {getDateStr(post.created_at)}
+                </div>
+            </div>
         </div>
     )
 }

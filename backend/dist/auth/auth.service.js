@@ -64,7 +64,7 @@ let AuthService = class AuthService {
         if (!password) {
             throw new common_1.UnauthorizedException();
         }
-        const user = await this.userRepository.findOne({ where: { name: (0, typeorm_2.Equal)(name) } });
+        const user = await this.userRepository.findOne({ where: { umail: (0, typeorm_2.Equal)(name) } });
         if (!user) {
             throw new common_1.UnauthorizedException();
         }

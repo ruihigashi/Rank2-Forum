@@ -21,8 +21,8 @@ export class AuthService {
         if (!password) {
             throw new UnauthorizedException(); // パスワードが指定されていない場合は認証失敗
         }
-        // まずユーザー名でユーザーを検索する
-        const user = await this.userRepository.findOne({ where: { name: Equal(name) } });
+        // まずメールアドレスでユーザーを検索する
+        const user = await this.userRepository.findOne({ where: { umail: Equal(name) } });
 
         // ユーザーが見つからなければ認証失敗
         if (!user) {
