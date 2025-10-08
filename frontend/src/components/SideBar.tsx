@@ -1,12 +1,15 @@
-import { useContext, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import { UserContext } from "../providers/UserProvider";
 import { PostListContext, PostType } from "../providers/PostListContext";
 import { post, getList } from "../api/Post";
+import { getUser } from "../api/User";
 
 export default function SideBar() {
     const [msg, setMsg] = useState("");
     const { userInfo } = useContext(UserContext); // コンテキストからuserInfoを取り出す
     const { setPostList } = useContext(PostListContext);
+    const [userName, setUserName] = useState("");
+    const [email, setEmail] = useState("");
 
     const getPostList = async () => {
         const posts = await getList(userInfo.token);
@@ -25,25 +28,36 @@ export default function SideBar() {
         }
         setPostList(postList);
     };
-    
+
     const onSendClick = async () => {
         await post(String(userInfo.id), userInfo.token, msg);
         await getPostList();
     }
 
+    useEffect(() => {
+        const myGetUser = async () => {
+            const user = await getUser(userInfo.id, userInfo.token);
+            setUserName(user.name);
+            setEmail(user.umail);
+        };
+        myGetUser();
+    }, []);
     return (
-        <div>
-            <div>hoge</div>
-            <div>hoge@example.com</div>
+        <div className="h-full border-r-2 border-gray-400 px-4 py-4">
+            <div className="">{userName}</div>
+            <div>{email}</div>
             <div>
                 <textarea
                     rows={4}
                     value={msg}
                     onChange={(evt) => setMsg(evt.target.value)}
+                    className="border-2 border-gray-400 w-full mt-6 rounded-md"
                 ></textarea>
             </div>
-            <div>
-                <button onClick={onSendClick}>送信</button>
+            <div className=" flex justify-end">
+                <button onClick={onSendClick} className="bg-gray-900 hover:bg-gray-700 text-white px-4 py-1 rounded">
+                    送信
+                </button>
             </div>
         </div>
     )
