@@ -1,7 +1,7 @@
 
 export default function Register() {
 
-    const onClickRegister = async () => {
+    const onRegisterClick = async () => {
 
     }
 
