@@ -28,9 +28,6 @@ export default function SignIn() {
         }
     }
 
-        const onRegisterClick = async () => {
-    }
-
     return (
         <div className="flex items-center justify-center min-h-screen ">
             <div className="bg-gray-50 p-8 rounded-2xl shadow-xl w-full max-w-md">
@@ -58,16 +55,16 @@ export default function SignIn() {
                 <button
                     type="button"
                     onClick={onSignInClick}
-                    className="w-full bg-gray-900 hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded transition"
+                    className="w-full bg-gray-900 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded transition"
                 >
                     ログイン
                 </button>
                 <button
                     type="button"
-                    onClick={onRegisterClick}
-                    className="w-full bg-blue-500 hover:bg-gray-900 text-white font-semibold py-2 px-4 mt-2 rounded transition"
+                    onClick={() => {navigate("/register")}}
+                    className="w-full hover:bg-gray-900 hover:text-white text-brack font-semibold py-2 px-4 mt-2 rounded transition border-gray-400 border-2" 
                 >
-                    新規登録    
+                    新規登録
                 </button>
             </div>
         </div>
