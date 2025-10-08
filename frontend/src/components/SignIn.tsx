@@ -2,7 +2,7 @@ import { useState, useContext } from "react"
 
 import { sign_in } from '../api/Auth';
 import { useNavigate } from "react-router-dom";
-import { UserContext } from "../providers/UserProvider"; 
+import { UserContext } from "../providers/UserProvider";
 
 export default function SignIn() {
     const navigate = useNavigate(); // navigateオブジェクトの作成
@@ -10,16 +10,21 @@ export default function SignIn() {
     const [pass, setPass] = useState(''); // パスワードを保持するstate
     const { setUserInfo } = useContext(UserContext); //setUserInfoの取り出し
 
-    const onSignInClick = async() => {
-        const ret = await sign_in(userId, pass);
-        
-        if (ret && ret.token) {
-            // setUserInfoを使用してコンテキストにユーザー情報を保存する
-            setUserInfo({
-                id: ret.user_id, 
-                token: ret.token,
-            });
-            navigate('/main'); // メイン画面に遷移
+    const onSignInClick = async () => {
+        try {
+            const ret = await sign_in(userId, pass);
+            if (ret && ret.token) {
+                // setUserInfoを使用してコンテキストにユーザー情報を保存する
+                setUserInfo({
+                    id: ret.user_id,
+                    token: ret.token,
+                });
+                navigate('/main'); // メイン画面に遷移
+            } else {
+                console.error('Sign in failed: no token in response', ret);
+            }
+        } catch (err) {
+            console.error('Sign in error', err);
         }
     }
 
