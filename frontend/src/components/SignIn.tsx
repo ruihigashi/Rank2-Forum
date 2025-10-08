@@ -6,13 +6,13 @@ import { UserContext } from "../providers/UserProvider";
 
 export default function SignIn() {
     const navigate = useNavigate(); // navigateオブジェクトの作成
-    const [userId, setUserId] = useState(''); // ユーザーIDを保持するstate
-    const [pass, setPass] = useState(''); // パスワードを保持するstate
+    const [userName, setUserId] = useState(''); // ユーザーIDを保持するstate
+    const [password, setPass] = useState(''); // パスワードを保持するstate
     const { setUserInfo } = useContext(UserContext); //setUserInfoの取り出し
 
     const onSignInClick = async () => {
         try {
-            const ret = await sign_in(userId, pass);
+            const ret = await sign_in(userName, password);
             if (ret && ret.token) {
                 // setUserInfoを使用してコンテキストにユーザー情報を保存する
                 setUserInfo({
@@ -33,10 +33,10 @@ export default function SignIn() {
             <div className="bg-gray-50 p-8 rounded-2xl shadow-xl w-full max-w-md">
                 <h2 className="text-2xl font-bold mb-6 text-center">サインイン</h2>
                 <div className="mb-4">
-                    <label htmlFor="id" className="block text-gray-700 mb-1">ID</label>
+                    <label htmlFor="id" className="block text-gray-700 mb-1">ユーザー名</label>
                     <input
                         id="id"
-                        value={userId}
+                        value={userName}
                         type="text"
                         onChange={(evt) => setUserId(evt.target.value)}
                         className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-300"
@@ -46,7 +46,7 @@ export default function SignIn() {
                     <label htmlFor="password" className="block text-gray-700 mb-1">パスワード</label>
                     <input
                         id="password"
-                        value={pass}
+                        value={password}
                         type="password"
                         onChange={(evt) => setPass(evt.target.value)}
                         className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-300"

@@ -23,7 +23,7 @@ export class UserService {
 
         const record = {
             name: name,
-            email: email,
+            umail: email,
             hash: hash,
         }
         await this.userRepository.save(record);

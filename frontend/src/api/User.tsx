@@ -6,4 +6,11 @@ const getUser = async (user_id: number, token: string) => {
     return res.data;
 }
 
-export { getUser };
+
+const createUser = async (name: string, email: string, password: string) => {
+    const url = `http://localhost:3000/user`;
+    const res = await axios.post(url, { name, email, password });
+    return res.data;
+}
+
+export { getUser, createUser };
