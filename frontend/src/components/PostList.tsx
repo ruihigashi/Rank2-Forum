@@ -36,11 +36,15 @@ export default function PostList() {
     }, [])
 
     return (
-        <div>
-            <p>PostList</p>
-            {postList.map((p: PostType) => (
-            <Post key={p.id} post={p} />
-            ))}
+        <div className="px-4 py-4 display justify-center">
+            <div className="flex justify-center">
+                <p className="text-4xl mb-4 font-medium">PostList</p>
+            </div>
+            <div>
+                {postList.map((p: PostType) => (
+                    <Post key={p.id} post={p} />
+                ))}
+            </div>
         </div>
     )
 }

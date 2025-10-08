@@ -24,10 +24,19 @@ export default function Post(props: any) {
     }
 
     return (
-        <div>
-            <div>{getDateStr(post.created_at)}</div>
-            <div>{post.user_name}</div>
-            <div>{getLines(post.content)}</div>
+        <div className="mb-4">
+            {/* ユーザー名はボーダーの外に表示 */}
+            <div className="text-xl font-semibold">{post.user_name}</div>
+
+            {/* ボーダー内に投稿内容を表示。relativeを付けて右下に時刻を配置 */}
+            <div className="border rounded px-4 py-3 relative bg-white">
+                <div className="text-base text-gray-800 whitespace-pre-wrap">
+                    {getLines(post.content)}
+                </div>
+                <div className="absolute right-2 bottom-1 text-xs text-gray-500">
+                    {getDateStr(post.created_at)}
+                </div>
+            </div>
         </div>
     )
 }
