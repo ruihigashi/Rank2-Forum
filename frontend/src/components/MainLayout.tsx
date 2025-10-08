@@ -33,9 +33,7 @@ const SBody = styled.div`
 `
 
 const SSideBar = styled.div`
-	border: 2px solid blue;
 	width: 30%;
-	height: 100%;
 `
 
 const SContents = styled.div`
