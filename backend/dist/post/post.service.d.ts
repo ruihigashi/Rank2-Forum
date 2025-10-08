@@ -1,5 +1,5 @@
-import { Auth } from 'src/entities/auth.js';
-import { MicroPost } from 'src/entities/microposts.js';
+import { Auth } from 'src/entities/auth';
+import { MicroPost } from 'src/entities/microposts';
 import { Repository } from 'typeorm';
 export declare class PostService {
     private microPostsRepository;

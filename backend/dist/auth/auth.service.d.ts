@@ -1,5 +1,5 @@
-import { Auth } from 'src/entities/auth.js';
-import { User } from 'src/entities/user.entity.js';
+import { Auth } from 'src/entities/auth';
+import { User } from 'src/entities/user.entity';
 import { Repository } from 'typeorm';
 export declare class AuthService {
     private userRepository;

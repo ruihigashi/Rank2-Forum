@@ -15,8 +15,8 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.PostService = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
-const auth_js_1 = require("src/entities/auth.js");
-const microposts_js_1 = require("src/entities/microposts.js");
+const auth_1 = require("../entities/auth");
+const microposts_1 = require("../entities/microposts");
 const typeorm_2 = require("typeorm");
 let PostService = class PostService {
     microPostsRepository;
@@ -73,8 +73,8 @@ let PostService = class PostService {
 exports.PostService = PostService;
 exports.PostService = PostService = __decorate([
     (0, common_1.Injectable)(),
-    __param(0, (0, typeorm_1.InjectRepository)(microposts_js_1.MicroPost)),
-    __param(1, (0, typeorm_1.InjectRepository)(auth_js_1.Auth)),
+    __param(0, (0, typeorm_1.InjectRepository)(microposts_1.MicroPost)),
+    __param(1, (0, typeorm_1.InjectRepository)(auth_1.Auth)),
     __metadata("design:paramtypes", [typeorm_2.Repository,
         typeorm_2.Repository])
 ], PostService);
