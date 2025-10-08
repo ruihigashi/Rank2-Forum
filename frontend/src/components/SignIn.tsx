@@ -28,10 +28,13 @@ export default function SignIn() {
         }
     }
 
+        const onRegisterClick = async () => {
+    }
+
     return (
         <div className="flex items-center justify-center min-h-screen ">
             <div className="bg-gray-50 p-8 rounded-2xl shadow-xl w-full max-w-md">
-                <h2 className="text-2xl font-bold mb-6 text-center">Sign In</h2>
+                <h2 className="text-2xl font-bold mb-6 text-center">サインイン</h2>
                 <div className="mb-4">
                     <label htmlFor="id" className="block text-gray-700 mb-1">ID</label>
                     <input
@@ -43,7 +46,7 @@ export default function SignIn() {
                     />
                 </div>
                 <div className="mb-6">
-                    <label htmlFor="password" className="block text-gray-700 mb-1">Password</label>
+                    <label htmlFor="password" className="block text-gray-700 mb-1">パスワード</label>
                     <input
                         id="password"
                         value={pass}
@@ -55,9 +58,16 @@ export default function SignIn() {
                 <button
                     type="button"
                     onClick={onSignInClick}
-                    className="w-full bg-gray-900 hover:bg-gray-700 text-white font-semibold py-2 px-4 rounded transition"
+                    className="w-full bg-gray-900 hover:bg-blue-500 text-white font-semibold py-2 px-4 rounded transition"
                 >
-                    Login
+                    ログイン
+                </button>
+                <button
+                    type="button"
+                    onClick={onRegisterClick}
+                    className="w-full bg-blue-500 hover:bg-gray-900 text-white font-semibold py-2 px-4 mt-2 rounded transition"
+                >
+                    新規登録    
                 </button>
             </div>
         </div>

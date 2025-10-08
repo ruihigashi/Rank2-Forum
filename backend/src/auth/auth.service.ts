@@ -4,6 +4,7 @@ import { Auth } from 'src/entities/auth';
 import { User } from 'src/entities/user.entity';
 import { Equal, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
+import * as crypto from 'crypto';
 
 @Injectable()
 export class AuthService {
@@ -60,7 +61,7 @@ export class AuthService {
             const record = {
                 user_id: user.id,
                 token: token,
-                expire_at: expire.toISOString(),
+                expire_at: expire,
             };
             await this.authRepository.save(record);
             ret.token = token;
