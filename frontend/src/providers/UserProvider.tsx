@@ -8,7 +8,7 @@ type UserInfo = {
 
 // UserContextの作成
 // UserContextにはProviderとConsumerの二つのフィールドが含まれる
-export const UserContext = createContext(
+export const UserContext = createContext (
     {} as {
         userInfo: UserInfo;
         setUserInfo: Dispatch<SetStateAction<UserInfo>>;
