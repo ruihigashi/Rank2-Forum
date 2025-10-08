@@ -52,6 +52,7 @@ const auth_1 = require("../entities/auth");
 const user_entity_1 = require("../entities/user.entity");
 const typeorm_2 = require("typeorm");
 const bcrypt = __importStar(require("bcrypt"));
+const crypto = __importStar(require("crypto"));
 let AuthService = class AuthService {
     userRepository;
     authRepository;
@@ -92,7 +93,7 @@ let AuthService = class AuthService {
             const record = {
                 user_id: user.id,
                 token: token,
-                expire_at: expire.toISOString(),
+                expire_at: expire,
             };
             await this.authRepository.save(record);
             ret.token = token;
