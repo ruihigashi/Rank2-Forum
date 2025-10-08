@@ -1,8 +1,23 @@
 
+import { useState } from "react";
+import { createUser } from "../api/User";
+import { useNavigate } from "react-router-dom";
+
 export default function Register() {
 
-    const onRegisterClick = async () => {
+    const [userName, setName] = useState("");
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const navigate = useNavigate();
 
+    const onRegisterClick = async () => {
+        // 登録画面にて、入力した内容をbackendに渡して処理が成功すればログイン画面に戻る処理
+        try {
+            await createUser(userName, email, password);
+            navigate('/');
+        } catch (err) {
+            console.error('登録に失敗しました', err); // 登録に失敗すればコンソールにエラーを表示
+        }
     }
 
     return (
@@ -15,6 +30,8 @@ export default function Register() {
                         <input
                             id="id"
                             type="text"
+                            value={userName}
+                            onChange={(evt) => setName(evt.target.value)}
                             className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-300"
                         />
                     </div>
@@ -22,7 +39,9 @@ export default function Register() {
                         <label htmlFor="password" className="block text-gray-700 mb-1">メールアドレス</label>
                         <input
                             id="password"
-                            type="password"
+                            type="email"
+                            value={email}
+                            onChange={(evt) => setEmail(evt.target.value)}
                             className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-300"
                         />
                     </div>
@@ -31,6 +50,8 @@ export default function Register() {
                         <input
                             id="password"
                             type="password"
+                            value={password}
+                            onChange={(evt) => setPassword(evt.target.value)}
                             className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-300"
                         />
                     </div>

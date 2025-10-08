@@ -16,7 +16,7 @@ import { AuthModule } from './auth/auth.module';
       password: process.env.DB_PASS,
       database: process.env.DB_NAME,
       autoLoadEntities: true, // entitiesオプションにエンティティクラスを一つずつ追加しなくても、自動でエンティティを検出してくれる便利な設定
-      synchronize: false,
+      synchronize: true,
     }),
     UserModule,
     PostModule,

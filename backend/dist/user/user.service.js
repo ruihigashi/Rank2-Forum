@@ -64,7 +64,7 @@ let UserService = class UserService {
         const hash = await bcrypt.hash(password, saltRounds);
         const record = {
             name: name,
-            email: email,
+            umail: email,
             hash: hash,
         };
         await this.userRepository.save(record);
