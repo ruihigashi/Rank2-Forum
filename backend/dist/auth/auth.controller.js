@@ -20,8 +20,8 @@ let AuthController = class AuthController {
     constructor(authService) {
         this.authService = authService;
     }
-    async getAuth(name, password) {
-        return await this.authService.getAuth(name, password);
+    async getAuth(umail, password) {
+        return await this.authService.getAuth(umail, password);
     }
 };
 exports.AuthController = AuthController;
