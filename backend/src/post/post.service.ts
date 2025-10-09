@@ -72,4 +72,35 @@ export class PostService {
 
         return records;
     }
+
+    // 指定された投稿IDを削除する
+    async deletePost(id: number, token: string) {
+        // 認証チェック
+        const now = new Date();
+        const auth = await this.authRepository.findOne({
+            where: {
+                token: Equal(token),
+                expire_at: MoreThan(now),
+            }
+        });
+
+        if (!auth) {
+            throw new ForbiddenException();
+        }
+
+        // 投稿が存在するかを取得
+        const post = await this.microPostsRepository.findOne({ where: { id: Equal(id) } });
+        if (!post) {
+            return { deleted: false };
+        }
+
+        // 所有者のチェック（投稿者と認証ユーザーが同じでない場合は削除不可）
+        if (post.user_id !== auth.user_id) {
+            throw new ForbiddenException();
+        }
+
+        // 削除実行
+        await this.microPostsRepository.delete(id);
+        return { deleted: true };
+    }
 }
