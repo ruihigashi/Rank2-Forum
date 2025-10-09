@@ -12,4 +12,7 @@ export declare class PostService {
         user_name: string;
         created_at: Date;
     }[]>;
+    deletePost(id: number, token: string): Promise<{
+        deleted: boolean;
+    }>;
 }

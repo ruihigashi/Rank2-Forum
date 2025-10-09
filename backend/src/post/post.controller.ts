@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Post, Query } from '@nestjs/common';
+import { Body, Controller, Delete, Get, Post, Query } from '@nestjs/common';
 import { PostService } from './post.service';
 import { NumericType } from 'typeorm';
 
@@ -21,5 +21,13 @@ export class PostController {
         @Query('records') records: number,
     ) {
         return await this.postService.getList(token, start, records)
+    }
+
+    @Delete()
+    async deletePost(
+        @Query('id') id: number,
+        @Query('token') token: string,
+    ) {
+        return await this.postService.deletePost(id, token);
     }
 }

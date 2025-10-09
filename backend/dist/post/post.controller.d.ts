@@ -9,4 +9,7 @@ export declare class PostController {
         user_name: string;
         created_at: Date;
     }[]>;
+    deletePost(id: number, token: string): Promise<{
+        deleted: boolean;
+    }>;
 }

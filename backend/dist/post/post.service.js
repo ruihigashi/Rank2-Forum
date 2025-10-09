@@ -69,6 +69,27 @@ let PostService = class PostService {
         console.log(records);
         return records;
     }
+    async deletePost(id, token) {
+        const now = new Date();
+        const auth = await this.authRepository.findOne({
+            where: {
+                token: (0, typeorm_2.Equal)(token),
+                expire_at: (0, typeorm_2.MoreThan)(now),
+            }
+        });
+        if (!auth) {
+            throw new common_1.ForbiddenException();
+        }
+        const post = await this.microPostsRepository.findOne({ where: { id: (0, typeorm_2.Equal)(id) } });
+        if (!post) {
+            return { deleted: false };
+        }
+        if (post.user_id !== auth.user_id) {
+            throw new common_1.ForbiddenException();
+        }
+        await this.microPostsRepository.delete(id);
+        return { deleted: true };
+    }
 };
 exports.PostService = PostService;
 exports.PostService = PostService = __decorate([

@@ -1,8 +1,14 @@
-import React, { ReactNode } from "react";
+import React, { ReactNode, useContext } from "react";
 import deleteButton from "../asset/img/deleteButton.png"
+import { PostListContext } from "../providers/PostListContext";
+import { UserContext } from "../providers/UserProvider";
+import { deletePost } from "../api/Post";
 
 export default function Post(props: any) {
-    const { children, post } = props;
+    const { post } = props;
+    // ユーザー情報と投稿一覧のコンテキストをトップレベルで取得
+    const { userInfo } = useContext(UserContext);
+    const { postList, setPostList } = useContext(PostListContext);
     const getDateStr = (dateObj: Date) => {
         const year = post.created_at.getFullYear();
         const month = post.created_at.getMonth() + 1;
@@ -24,6 +30,25 @@ export default function Post(props: any) {
         });
     }
 
+    // 削除ボタンを押したときの処理
+    const onClickDelete = async () => {
+        // 確認ダイアログ
+        const ok = window.confirm('本当にこの投稿を削除しますか？');
+        if (!ok) return; // ユーザーがキャンセルしたら何もしない
+
+        try {
+            // APIに削除リクエストを送る
+            await deletePost(post.id, userInfo.token);
+
+            // ローカルの投稿一覧から該当投稿を取り除いてUIを更新
+            const filtered = postList.filter((p: any) => p.id !== post.id);
+            setPostList(filtered);
+        } catch (err) {
+            console.error('削除エラー', err);
+            alert('削除に失敗しました');
+        }
+    }
+
     return (
         <div className="mb-4">
             <div className="text-xl font-semibold mb-1">{post.user_name}</div>
@@ -38,6 +63,7 @@ export default function Post(props: any) {
                 </div>
                 <button
                     className="flex items-center justify-center w-10 h-10 hover:opacity-80 transition"
+                    onClick={onClickDelete}
                 >
                     <img src={deleteButton} alt="削除ボタン" className="w-5 h-5" />
                 </button>
