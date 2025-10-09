@@ -61,16 +61,20 @@ export default function PostList() {
         setPostList(result);
     };
 
+    const onReloadClick = () => {
+        // getPostList を呼んで最新データを取得する
+        getPostList();
+
+        alert("更新が完了しました")
+    }
+
     return (
         <div className="px-4 py-4 display justify-center">
             <div className="flex items-center justify-between px-8">
                 <p className="text-4xl mb-4 font-medium text-center flex-1">PostList</p>
                 <button
                     className="flex items-center justify-end"
-                    onClick={() => {
-                        // getPostList を呼んで最新データを取得する
-                        getPostList();
-                    }}
+                    onClick={onReloadClick}
                 >
                     <img src={reloadButton} alt="リロードボタン" className="w-6 h-5" />
                 </button>
