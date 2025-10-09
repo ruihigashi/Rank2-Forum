@@ -44,8 +44,10 @@ export default function SideBar() {
     }, []);
     return (
         <div className="h-full border-r-2 border-gray-400 px-4 py-4">
-            <div className="text-xl">{userName}</div>
-            <div className="text-xl">{email}</div>
+            <div className="flex flex-col items-start space-y-1">
+                <div className="text-base sm:text-lg md:text-xl lg:text-2xl">{userName}</div>
+                <div className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600">{email}</div>
+            </div>
             <div>
                 <textarea
                     rows={4}
