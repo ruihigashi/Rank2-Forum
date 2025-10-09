@@ -1,4 +1,5 @@
 import React, { ReactNode } from "react";
+import deleteButton from "../asset/img/deleteButton.png"
 
 export default function Post(props: any) {
     const { children, post } = props;
@@ -25,14 +26,21 @@ export default function Post(props: any) {
 
     return (
         <div className="mb-4">
-            <div className="text-xl font-semibold">{post.user_name}</div>
-            <div className="border border-gray-900 rounded px-4 py-3 relative bg-white">
-                <div className="text-base text-gray-800 whitespace-pre-wrap">
-                    {getLines(post.content)}
+            <div className="text-xl font-semibold mb-1">{post.user_name}</div>
+            <div className="relative flex w-full items-start">
+                <div className="border border-gray-900 rounded px-4 py-3 bg-white w-full">
+                    <div className="text-base text-gray-800 whitespace-pre-wrap">
+                        {getLines(post.content)}
+                    </div>
+                    <div className="text-right text-xs text-gray-500">
+                        {getDateStr(post.created_at)}
+                    </div>
                 </div>
-                <div className="absolute right-2 bottom-1 text-xs text-gray-500">
-                    {getDateStr(post.created_at)}
-                </div>
+                <button
+                    className="flex items-center justify-center w-10 h-10 hover:opacity-80 transition"
+                >
+                    <img src={deleteButton} alt="削除ボタン" className="w-5 h-5" />
+                </button>
             </div>
         </div>
     )
