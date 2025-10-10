@@ -67,10 +67,10 @@ export default function UserDetailModal({ show, onClose, userDetails, onUpdated,
                             <>
                                 <h3 className="text-xl font-semibold mb-4">ユーザー情報</h3>
                                 <p className="mb-2">
-                                    <strong>ユーザー名:</strong> {userDetails.name}
+                                    <strong className="text-gray-500">ユーザー名:</strong> {userDetails.name}
                                 </p>
                                 <p className="mb-2">
-                                    <strong>メールアドレス:</strong> {userDetails.umail || userDetails.email}
+                                    <strong className="text-gray-500">メールアドレス:</strong> {userDetails.umail || userDetails.email}
                                 </p>
                                 <div className="flex justify-center">
                                     <button onClick={() => setEditing(true)} className="text-white bg-blue-500 mt-4 px-6 py-2 rounded">
