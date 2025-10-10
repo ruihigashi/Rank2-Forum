@@ -1,6 +1,6 @@
 import { ForbiddenException, Injectable, NotFoundException } from '@nestjs/common';
-import { InjectRepository } from '@nestjs/typeorm';
 import * as bcrypt from 'bcrypt';
+import { InjectRepository } from '@nestjs/typeorm';
 import { Auth } from 'src/entities/auth';
 import { User } from 'src/entities/user.entity';
 import { Equal, MoreThan, Repository } from 'typeorm';
@@ -52,5 +52,50 @@ export class UserService {
         }
 
         return user;
+    }
+
+    async updateUser(name: string, email:string, id: number, token: string, created_at?: string) {
+        // 認証トークンの検証
+        const now = new Date();
+        const auth = await this.auhtRepository.findOne({
+            where: {
+                token: Equal(token),
+                expire_at: MoreThan(now),
+            }
+        });
+        if (!auth) {
+            throw new ForbiddenException();
+        }
+
+        // 対象ユーザーを取得
+        const user = await this.userRepository.findOne({ where: { id: Equal(id) } });
+        if (!user) {
+            throw new NotFoundException();
+        }
+
+        // 所有者か確認（auth.user_id と id が一致すること）
+        if (auth.user_id !== id) {
+            throw new ForbiddenException();
+        }
+
+        // 更新するフィールドを適用
+        if (name) user.name = name;
+        if (email) user.umail = email;
+        if (created_at) {
+            // created_at を文字列で受け取るため、Date に変換して代入
+            const dt = new Date(created_at);
+            if (!isNaN(dt.getTime())) {
+                // @ts-ignore: created_at はエンティティで readonly になっていることがあるが、更新要求を受け入れる
+                user.created_at = dt as any;
+            }
+        }
+
+        const updated = await this.userRepository.save(user);
+
+        // 返却時には hash を除外して返す
+        // 浅いコピーを作成して hash を削除
+        const safeUser: any = { ...updated };
+        delete safeUser.hash;
+        return safeUser;
     }
 }
