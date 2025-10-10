@@ -69,7 +69,7 @@ export default function Header() {
                 </div>
             </div>
 
-            <UserDetailModal show={showModal} onClose={closeUserModal} userDetails={userDetails} />
+            <UserDetailModal show={showModal} onClose={closeUserModal} userDetails={userDetails} onUpdated={(u:any)=>{ setUserName(u.name); }} token={userInfo.token} />
         </>
     );
 }

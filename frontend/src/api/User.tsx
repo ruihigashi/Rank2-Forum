@@ -13,9 +13,9 @@ const createUser = async (name: string, email: string, password: string) => {
     return res.data;
 }
 
-const updateUser = async (name: string, email: string, created_at: string, token: string, user_id: number) => {
-    const url = `http://localhost:3000/user/${user_id}?token=${token}`;
-    const res = await axios.post(url, { name, email, created_at });
+const updateUser = async (name: string, email: string, token: string, user_id: number) => {
+    const url = `http://localhost:3000/user/update`;
+    const res = await axios.post(url, { name, email, id: user_id, token });
     return res.data;
 }
 
