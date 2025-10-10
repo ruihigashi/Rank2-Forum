@@ -5,6 +5,11 @@ import { UserService } from './user.service';
 export class UserController {
     constructor(private readonly userService: UserService){}
 
+    @Get('ping')
+    ping() {
+        return { ok: true };
+    }
+
     @Post()
     createUser(
         @Body('name') name: string,
@@ -27,6 +32,7 @@ export class UserController {
         @Body('id') id: number,
         @Body('token') token: string,
     ) {
+        console.log('[UserController] updateUser called:', { name, email, created_at, id });
         return await this.userService.updateUser(name, email, id, token, created_at);
     }
 }

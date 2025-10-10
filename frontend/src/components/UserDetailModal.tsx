@@ -14,6 +14,7 @@ export default function UserDetailModal({ show, onClose, userDetails, onUpdated,
     const [editing, setEditing] = useState(false);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
+    const [createdAt, setCreatedAt] = useState("");
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
@@ -21,6 +22,7 @@ export default function UserDetailModal({ show, onClose, userDetails, onUpdated,
         if (userDetails) {
             setName(userDetails.name || "");
             setEmail(userDetails.umail || userDetails.email || "");
+            setCreatedAt(userDetails.created_at ? new Date(userDetails.created_at).toISOString() : "");
         }
     }, [userDetails]);
 
@@ -31,13 +33,14 @@ export default function UserDetailModal({ show, onClose, userDetails, onUpdated,
         setLoading(true);
         try {
             const tokenToUse = (token ? token : "");
-            const updated = await updateUser(name, email, tokenToUse, userDetails.user_id);
+            const updated = await updateUser(name, email, createdAt || new Date().toISOString(), tokenToUse, userDetails.id);
             if (onUpdated) onUpdated(updated);
             setEditing(false);
             onClose();
         } catch (err: any) {
             console.error(err);
-            setError(err?.response?.data || err.message || "更新に失敗しました");
+            const respData = err?.response?.data;
+            setError(typeof respData === 'string' ? respData : JSON.stringify(respData) || err.message || "更新に失敗しました");
         } finally {
             setLoading(false);
         }
