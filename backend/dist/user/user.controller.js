@@ -20,6 +20,9 @@ let UserController = class UserController {
     constructor(userService) {
         this.userService = userService;
     }
+    ping() {
+        return { ok: true };
+    }
     createUser(name, email, password) {
         this.userService.createUser(name, email, password);
     }
@@ -27,10 +30,17 @@ let UserController = class UserController {
         return await this.userService.getUser(token, id);
     }
     async updateUser(name, email, created_at, id, token) {
+        console.log('[UserController] updateUser called:', { name, email, created_at, id });
         return await this.userService.updateUser(name, email, id, token, created_at);
     }
 };
 exports.UserController = UserController;
+__decorate([
+    (0, common_1.Get)('ping'),
+    __metadata("design:type", Function),
+    __metadata("design:paramtypes", []),
+    __metadata("design:returntype", void 0)
+], UserController.prototype, "ping", null);
 __decorate([
     (0, common_1.Post)(),
     __param(0, (0, common_1.Body)('name')),
