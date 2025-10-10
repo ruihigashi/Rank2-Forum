@@ -7,4 +7,5 @@ export declare class UserService {
     constructor(userRepository: Repository<User>, auhtRepository: Repository<Auth>);
     createUser(name: string, email: string, password: string): Promise<void>;
     getUser(token: string, id: number): Promise<User>;
+    updateUser(name: string, email: string, id: number, token: string, created_at?: string): Promise<any>;
 }

@@ -4,4 +4,5 @@ export declare class UserController {
     constructor(userService: UserService);
     createUser(name: string, email: string, password: string): void;
     getUser(id: number, token: string): Promise<import("../entities/user.entity").User>;
+    updateUser(name: string, email: string, created_at: string, id: number, token: string): Promise<any>;
 }

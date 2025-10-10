@@ -47,8 +47,8 @@ var __param = (this && this.__param) || function (paramIndex, decorator) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.UserService = void 0;
 const common_1 = require("@nestjs/common");
-const typeorm_1 = require("@nestjs/typeorm");
 const bcrypt = __importStar(require("bcrypt"));
+const typeorm_1 = require("@nestjs/typeorm");
 const auth_1 = require("../entities/auth");
 const user_entity_1 = require("../entities/user.entity");
 const typeorm_2 = require("typeorm");
@@ -89,6 +89,39 @@ let UserService = class UserService {
             throw new common_1.NotFoundException();
         }
         return user;
+    }
+    async updateUser(name, email, id, token, created_at) {
+        const now = new Date();
+        const auth = await this.auhtRepository.findOne({
+            where: {
+                token: (0, typeorm_2.Equal)(token),
+                expire_at: (0, typeorm_2.MoreThan)(now),
+            }
+        });
+        if (!auth) {
+            throw new common_1.ForbiddenException();
+        }
+        const user = await this.userRepository.findOne({ where: { id: (0, typeorm_2.Equal)(id) } });
+        if (!user) {
+            throw new common_1.NotFoundException();
+        }
+        if (auth.user_id !== id) {
+            throw new common_1.ForbiddenException();
+        }
+        if (name)
+            user.name = name;
+        if (email)
+            user.umail = email;
+        if (created_at) {
+            const dt = new Date(created_at);
+            if (!isNaN(dt.getTime())) {
+                user.created_at = dt;
+            }
+        }
+        const updated = await this.userRepository.save(user);
+        const safeUser = { ...updated };
+        delete safeUser.hash;
+        return safeUser;
     }
 };
 exports.UserService = UserService;
