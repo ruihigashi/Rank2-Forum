@@ -17,10 +17,10 @@ export class PostController {
     @Get()
     async getList(
         @Query('token') token: string,
-        @Query('start') start: number,
-        @Query('records') records: number,
+        @Query('page') page = 1,
+        @Query('records') records = 10,
     ) {
-        return await this.postService.getList(token, start, records)
+        return await this.postService.getList(token, Number(page), Number(records))
     }
 
     @Delete()

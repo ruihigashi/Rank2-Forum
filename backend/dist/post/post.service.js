@@ -42,7 +42,7 @@ let PostService = class PostService {
         };
         await this.microPostsRepository.save(record);
     }
-    async getList(token, start = 0, nr_records = 1) {
+    async getList(token, page = 1, records = 10) {
         const now = new Date();
         const auth = await this.authRepository.findOne({
             where: {
@@ -53,21 +53,27 @@ let PostService = class PostService {
         if (!auth) {
             throw new common_1.ForbiddenException();
         }
-        const qb = await this.microPostsRepository
+        const offset = (page - 1) * records;
+        const qb = this.microPostsRepository
             .createQueryBuilder('micro_post')
             .leftJoinAndSelect('user', 'user', 'user.id = micro_post.user_id')
             .select([
             'micro_post.id as id',
             'user.name as user_name',
             'micro_post.content as content',
-            'micro_post.created_at as created_at'
+            'micro_post.created_at as created_at',
         ])
             .orderBy('micro_post.created_at', 'DESC')
-            .offset(start)
-            .limit(nr_records);
-        const records = await qb.getRawMany();
-        console.log(records);
-        return records;
+            .offset(offset)
+            .limit(records);
+        const posts = await qb.getRawMany();
+        const total = await this.microPostsRepository.count();
+        return {
+            posts,
+            total,
+            page,
+            totalPages: Math.ceil(total / records),
+        };
     }
     async deletePost(id, token) {
         const now = new Date();
