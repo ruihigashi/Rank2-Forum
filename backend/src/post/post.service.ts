@@ -47,7 +47,7 @@ export class PostService {
             throw new ForbiddenException();
         }
 
-        // ページング計算（ここがポイント）
+        // ページング計算
         const offset = (page - 1) * records;
 
         // 投稿取得クエリ
