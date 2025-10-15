@@ -27,7 +27,6 @@ export default function PostList() {
     const getPostList = async (pageNum = 1) => {
         try {
             const posts = await getList(userInfo.token, pageNum);
-            console.log("📡 取得ページ:", pageNum, posts);
 
             let fetchedPosts: Array<PostType> = [];
 
