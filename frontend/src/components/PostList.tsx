@@ -4,6 +4,8 @@ import { UserContext } from "../providers/UserProvider";
 import { getList } from "../api/Post";
 import Post from "./Post";
 import reloadButton from "../asset/img/reloadButton.png"
+import backButton from "../asset/img/backPageButton.png"
+import nextButton from "../asset/img/nextPageButton.png"
 
 export default function PostList() {
     // ポストリストコンテキスト、ユーザーコンテキストを使用する
@@ -101,6 +103,10 @@ export default function PostList() {
                         <Post key={p.id} post={p} />
                     ))}
                 </div>
+            </div>
+            <div className="flex justify-center mt-3">
+                <img src={backButton} alt="前ページ" className="w-10 h-10 mr-5"/>
+                <img src={nextButton} alt="次ページ" className="w-11 h-10"/>
             </div>
         </div>
     )
