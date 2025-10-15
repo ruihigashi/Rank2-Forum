@@ -16,10 +16,17 @@ export default function PostList() {
     const originalPosts = useRef<PostType[]>([]);
     const [searchWord, setSearchWord] = useState("");
 
-    // ポスト一覧を取得する関数
-    const getPostList = async () => {
-        console.log("MainLayout: getPostList");
-        const posts = await getList(userInfo.token);
+    // 1ページに表示する件数
+    const Page_SIZE = 10;
+    const [start, setStart] = useState<number>(0);
+
+    // ポスト一覧を取得する関数（offsetを受け取る）
+    const getPostList = async (offset: number = 0) => {
+        // 現在の表示開始位置をstateに保持
+        setStart(offset);
+
+        // APIにオフセットを取得件数を渡す
+        const posts = await getList(userInfo.token, offset, Page_SIZE);
         console.log(posts)
 
         // getListで取得したポスト配列をコンテキストに保存する
@@ -40,7 +47,7 @@ export default function PostList() {
 
     // 描画時にポスト一覧を取得する
     useEffect(() => {
-        getPostList();
+        getPostList(0);
     }, [])
 
     // 検索ボタンを押したときの処理
@@ -68,6 +75,23 @@ export default function PostList() {
         getPostList();
 
         alert("更新が完了しました")
+    }
+
+    // 次ページ取得処理
+    const nextPage = () => {
+        const nextStart = start + Page_SIZE;
+
+        getPostList(nextStart)
+    }
+
+    const prevPage = () => {
+        // 前のオフセットを計算
+        const prevStart = Math.max(0, start - Page_SIZE);
+
+        // prevStart が現在と同じなら何もしない
+        if (prevStart === start) return;
+
+        getPostList(prevStart);
     }
 
     return (
@@ -105,8 +129,8 @@ export default function PostList() {
                 </div>
             </div>
             <div className="flex justify-center mt-3">
-                <img src={backButton} alt="前ページ" className="w-10 h-10 mr-5"/>
-                <img src={nextButton} alt="次ページ" className="w-11 h-10"/>
+                <img src={backButton} alt="前ページ" className="w-10 h-10 mr-5" onClick={prevPage} />
+                <img src={nextButton} alt="次ページ" className="w-11 h-10" onClick={nextPage} />
             </div>
         </div>
     )
