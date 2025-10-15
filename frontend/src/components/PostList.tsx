@@ -16,32 +16,55 @@ export default function PostList() {
     const originalPosts = useRef<PostType[]>([]);
     const [searchWord, setSearchWord] = useState("");
 
-    // ポスト一覧を取得する関数
-    const getPostList = async () => {
-        console.log("MainLayout: getPostList");
-        const posts = await getList(userInfo.token);
-        console.log(posts)
+    // 現在のページを保持しておく
+    const [page, setPage] = useState(1);
 
-        // getListで取得したポスト配列をコンテキストに保存する
-        let fetchedPosts: Array<PostType> = [];
-        if (posts) {
-            posts.forEach((p: PostType) => {
-                fetchedPosts.push({
+    // 次ページがあるかどうかのState
+    const [hasNextPage, setHasNextPage] = useState(false);
+
+
+    // ポスト一覧を取得する関数(各ページごと)
+    const getPostList = async (pageNum = 1) => {
+        try {
+            const posts = await getList(userInfo.token, pageNum);
+            console.log("📡 取得ページ:", pageNum, posts);
+
+            let fetchedPosts: Array<PostType> = [];
+
+            if (posts && Array.isArray(posts)) {
+                fetchedPosts = posts.map((p: PostType) => ({
                     id: p.id,
                     user_name: p.user_name,
                     content: p.content,
                     created_at: new Date(p.created_at),
-                });
-            });
-        }
-        originalPosts.current = fetchedPosts;
-        setPostList(fetchedPosts);
-    }
+                }));
+            } else if (posts.posts) {
+                fetchedPosts = posts.posts.map((p: PostType) => ({
+                    id: p.id,
+                    user_name: p.user_name,
+                    content: p.content,
+                    created_at: new Date(p.created_at),
+                }));
+            }
 
-    // 描画時にポスト一覧を取得する
+            originalPosts.current = fetchedPosts;
+            setPostList(fetchedPosts);
+
+            setHasNextPage(fetchedPosts.length === 10);
+        } catch (error) {
+            console.error("投稿一覧取得中にエラー:", error);
+        }
+    };
+
+    // 描画時にポスト一覧を取得する（初回レンダー時）
     useEffect(() => {
-        getPostList();
+        getPostList(1);
     }, [])
+
+    // ページ変更時に再取得
+    useEffect(() => {
+        getPostList(page);
+    }, [page]);
 
     // 検索ボタンを押したときの処理
     const handleSearch = () => {
@@ -75,7 +98,7 @@ export default function PostList() {
     }
 
     const prevPage = () => {
-        
+
     }
 
     return (
@@ -113,8 +136,8 @@ export default function PostList() {
                 </div>
             </div>
             <div className="flex justify-center mt-3">
-                <img src={backButton} alt="前ページ" className="w-10 h-10 mr-5" onClick={prevPage}/>
-                <img src={nextButton} alt="次ページ" className="w-11 h-10" onClick={nextPage}/>
+                <img src={backButton} alt="前ページ" className="w-10 h-10 mr-5" onClick={prevPage} />
+                <img src={nextButton} alt="次ページ" className="w-11 h-10" onClick={nextPage} />
             </div>
         </div>
     )
