@@ -18,7 +18,7 @@ export default function SideBar() {
         let postList: Array<PostType> = [];
         if (posts) {
             console.log(posts);
-            posts.forEach((p: any) => {
+            posts.posts.forEach((p: any) => {
                 postList.push({
                     id: p.id,
                     user_name: p.user_name,
@@ -33,6 +33,7 @@ export default function SideBar() {
     const onSendClick = async () => {
         await post(String(userInfo.id), userInfo.token, msg);
         await getPostList();
+        setMsg("");
     }
 
     useEffect(() => {
@@ -43,6 +44,7 @@ export default function SideBar() {
         };
         myGetUser();
     }, []);
+
     return (
         <div className="h-full border-r-2 border-gray-400 px-4 py-4">
             <div className="flex items-center h-20">
