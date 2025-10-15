@@ -94,7 +94,11 @@ export default function PostList() {
     }
 
     const nextPage = () => {
-
+        if (hasNextPage) {
+            setPage((prev) => prev + 1);
+        } else {
+            alert("次ページはありません")
+        }
     }
 
     const prevPage = () => {
