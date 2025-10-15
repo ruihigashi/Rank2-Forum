@@ -103,7 +103,7 @@ export default function PostList() {
 
     const prevPage = () => {
         if (hasNextPage) {
-            setPage((prev) => prev + 1);
+            setPage((prev) => prev - 1);
         } else {
             alert("前のページはありません");
         }
