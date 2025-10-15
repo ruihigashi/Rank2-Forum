@@ -16,27 +16,36 @@ export default function PostList() {
     const originalPosts = useRef<PostType[]>([]);
     const [searchWord, setSearchWord] = useState("");
 
-    // ポスト一覧を取得する関数
-    const getPostList = async () => {
-        console.log("MainLayout: getPostList");
-        const posts = await getList(userInfo.token);
-        console.log(posts)
+    // 現在のページを保持しておく
+    const [page, setPage] = useState(1);
 
-        // getListで取得したポスト配列をコンテキストに保存する
-        let fetchedPosts: Array<PostType> = [];
-        if (posts) {
-            posts.forEach((p: PostType) => {
-                fetchedPosts.push({
+    //次ページがあるかどうかのState
+    const [hasNextPage, setHasNextPage] = useState(true);
+
+    // ポスト一覧を取得する関数
+    const getPostList = async (pageNum = 1) => {
+        try {
+            const posts = await getList(userInfo.token, pageNum);
+            let fetchedPosts: Array<PostType> = [];
+
+            if (posts && Array.isArray(posts)) {
+                fetchedPosts = posts.map((p: PostType) => ({
                     id: p.id,
                     user_name: p.user_name,
                     content: p.content,
                     created_at: new Date(p.created_at),
-                });
-            });
+                }));
+            }
+
+            originalPosts.current = fetchedPosts;
+            setPostList(fetchedPosts);
+
+            // 10件未満なら次ページなし
+            setHasNextPage(fetchedPosts.length === 10);
+        } catch (error) {
+            console.error("投稿一覧取得中にエラー:", error);
         }
-        originalPosts.current = fetchedPosts;
-        setPostList(fetchedPosts);
-    }
+    };
 
     // 描画時にポスト一覧を取得する
     useEffect(() => {
@@ -68,6 +77,14 @@ export default function PostList() {
         getPostList();
 
         alert("更新が完了しました")
+    }
+
+    const nextPage = () => {
+
+    }
+
+    const prevPage = () => {
+
     }
 
     return (
@@ -105,8 +122,8 @@ export default function PostList() {
                 </div>
             </div>
             <div className="flex justify-center mt-3">
-                <img src={backButton} alt="前ページ" className="w-10 h-10 mr-5"/>
-                <img src={nextButton} alt="次ページ" className="w-11 h-10"/>
+                <img src={backButton} alt="前ページ" className="w-10 h-10 mr-5" onClick={prevPage} />
+                <img src={nextButton} alt="次ページ" className="w-11 h-10" onClick={nextPage} />
             </div>
         </div>
     )
