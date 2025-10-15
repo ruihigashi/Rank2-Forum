@@ -23,8 +23,8 @@ let PostController = class PostController {
     async createPost(message, token) {
         return await this.postService.createPost(message, token);
     }
-    async getList(token, start, records) {
-        return await this.postService.getList(token, start, records);
+    async getList(token, page = 1, records = 10) {
+        return await this.postService.getList(token, Number(page), Number(records));
     }
     async deletePost(id, token) {
         return await this.postService.deletePost(id, token);
@@ -42,10 +42,10 @@ __decorate([
 __decorate([
     (0, common_1.Get)(),
     __param(0, (0, common_1.Query)('token')),
-    __param(1, (0, common_1.Query)('start')),
+    __param(1, (0, common_1.Query)('page')),
     __param(2, (0, common_1.Query)('records')),
     __metadata("design:type", Function),
-    __metadata("design:paramtypes", [String, Number, Number]),
+    __metadata("design:paramtypes", [String, Object, Object]),
     __metadata("design:returntype", Promise)
 ], PostController.prototype, "getList", null);
 __decorate([

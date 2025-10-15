@@ -11,9 +11,9 @@ const post = async (user_id: string, token: string, msg: string) => {
 }
 
 const getList = async (token: string, page: number = 1) => {
-  const url = `http://localhost:3000/post?token=${token}&records=10&page=${page}`;
-  const res = await axios.get(url);
-  return res.data;
+    const url = `http://localhost:3000/post?token=${token}&records=10&page=${page}`;
+    const res = await axios.get(url);
+    return res.data;
 };
 
 const deletePost = async (id: number, token: string) => {

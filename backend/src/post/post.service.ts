@@ -11,7 +11,7 @@ export class PostService {
         private microPostsRepository: Repository<MicroPost>,
         @InjectRepository(Auth)
         private authRepository: Repository<Auth>
-    ){}
+    ) { }
 
     async createPost(message: string, token: string) {
         // ログイン済みかチェック
@@ -33,45 +33,55 @@ export class PostService {
         await this.microPostsRepository.save(record);
     }
 
-    async getList(token: string, start: number = 0, nr_records: number = 1) {
+    async getList(token: string, page: number = 1, records: number = 10) {
         // ログイン済みかチェック
         const now = new Date();
         const auth = await this.authRepository.findOne({
             where: {
-                token:Equal(token),
+                token: Equal(token),
                 expire_at: MoreThan(now),
             }
-        })
-
+        });
 
         if (!auth) {
             throw new ForbiddenException();
         }
 
-        const qb = await this.microPostsRepository // microPostsRepositoryで複雑なSQL文をプログラムのコードとして安全に組み立てることができる
-        .createQueryBuilder('micro_post') // クエリビルダの初期化
-        .leftJoinAndSelect('user', 'user', 'user.id = micro_post.user_id')
-        .select([
-            'micro_post.id as id',
-            'user.name as user_name',
-            'micro_post.content as content', 
-            'micro_post.created_at as created_at'
-        ])
-        .orderBy('micro_post.created_at', 'DESC')
-        .offset(start)
-        .limit(nr_records);
+        // ページング計算（ここがポイント）
+        const offset = (page - 1) * records;
+
+        // 投稿取得クエリ
+        const qb = this.microPostsRepository
+            .createQueryBuilder('micro_post')
+            .leftJoinAndSelect('user', 'user', 'user.id = micro_post.user_id')
+            .select([
+                'micro_post.id as id',
+                'user.name as user_name',
+                'micro_post.content as content',
+                'micro_post.created_at as created_at',
+            ])
+            .orderBy('micro_post.created_at', 'DESC')
+            .offset(offset)
+            .limit(records);
 
         type ResultType = {
             id: number;
             content: string;
             user_name: string;
             created_at: Date;
-        }
-        const records = await qb.getRawMany<ResultType>();
-        console.log(records);
+        };
 
-        return records;
+        const posts = await qb.getRawMany<ResultType>();
+        const total = await this.microPostsRepository.count();
+
+        return {
+            posts,
+            total,
+            page,
+            totalPages: Math.ceil(total / records),
+        };
     }
+
 
     // 指定された投稿IDを削除する
     async deletePost(id: number, token: string) {
