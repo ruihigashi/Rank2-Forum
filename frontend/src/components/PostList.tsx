@@ -49,8 +49,8 @@ export default function PostList() {
 
     // 描画時にポスト一覧を取得する
     useEffect(() => {
-        getPostList();
-    }, [])
+        getPostList(page);
+    }, [page])
 
     // 検索ボタンを押したときの処理
     const handleSearch = () => {
@@ -80,7 +80,11 @@ export default function PostList() {
     }
 
     const nextPage = () => {
-
+        if (hasNextPage) { 
+            setPage((prev) => prev + 1 ); 
+        } else {
+            alert("次ページはありません")
+        }
     }
 
     const prevPage = () => {
