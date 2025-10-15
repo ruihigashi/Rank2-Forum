@@ -16,38 +16,40 @@ export default function PostList() {
     const originalPosts = useRef<PostType[]>([]);
     const [searchWord, setSearchWord] = useState("");
 
-    // 1ページに表示する件数
-    const Page_SIZE = 10;
-    const [start, setStart] = useState<number>(0);
+    // 現在のページを保持しておく
+    const [page, setPage] = useState(1);
 
-    // ポスト一覧を取得する関数（offsetを受け取る）
-    const getPostList = async (offset: number = 0) => {
-        // 現在の表示開始位置をstateに保持
-        setStart(offset);
+    //次ページがあるかどうかのState
+    const [hasNextPage, setHasNextPage] = useState(true);
 
-        // APIにオフセットを取得件数を渡す
-        const posts = await getList(userInfo.token, offset, Page_SIZE);
-        console.log(posts)
+    // ポスト一覧を取得する関数
+    const getPostList = async (pageNum = 1) => {
+        try {
+            const posts = await getList(userInfo.token, pageNum);
+            let fetchedPosts: Array<PostType> = [];
 
-        // getListで取得したポスト配列をコンテキストに保存する
-        let fetchedPosts: Array<PostType> = [];
-        if (posts) {
-            posts.forEach((p: PostType) => {
-                fetchedPosts.push({
+            if (posts && Array.isArray(posts)) {
+                fetchedPosts = posts.map((p: PostType) => ({
                     id: p.id,
                     user_name: p.user_name,
                     content: p.content,
                     created_at: new Date(p.created_at),
-                });
-            });
+                }));
+            }
+
+            originalPosts.current = fetchedPosts;
+            setPostList(fetchedPosts);
+
+            // 10件未満なら次ページなし
+            setHasNextPage(fetchedPosts.length === 10);
+        } catch (error) {
+            console.error("投稿一覧取得中にエラー:", error);
         }
-        originalPosts.current = fetchedPosts;
-        setPostList(fetchedPosts);
-    }
+    };
 
     // 描画時にポスト一覧を取得する
     useEffect(() => {
-        getPostList(0);
+        getPostList();
     }, [])
 
     // 検索ボタンを押したときの処理
@@ -77,21 +79,12 @@ export default function PostList() {
         alert("更新が完了しました")
     }
 
-    // 次ページ取得処理
     const nextPage = () => {
-        const nextStart = start + Page_SIZE;
 
-        getPostList(nextStart)
     }
 
     const prevPage = () => {
-        // 前のオフセットを計算
-        const prevStart = Math.max(0, start - Page_SIZE);
 
-        // prevStart が現在と同じなら何もしない
-        if (prevStart === start) return;
-
-        getPostList(prevStart);
     }
 
     return (
