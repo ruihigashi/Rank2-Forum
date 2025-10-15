@@ -102,7 +102,7 @@ export default function PostList() {
     }
 
     const prevPage = () => {
-        if (hasNextPage) {
+        if (page > 1) {
             setPage((prev) => prev - 1);
         } else {
             alert("前のページはありません");
@@ -143,9 +143,22 @@ export default function PostList() {
                     ))}
                 </div>
             </div>
-            <div className="flex justify-center mt-3">
-                <img src={backButton} alt="前ページ" className="w-10 h-10 mr-5" onClick={prevPage} />
-                <img src={nextButton} alt="次ページ" className="w-11 h-10" onClick={nextPage} />
+            <div className="flex justify-center mt-3 items-center">
+                <img
+                    src={backButton}
+                    alt="前ページ"
+                    className={`w-10 h-10 mr-5 cursor-pointer ${page === 1 ? "opacity-30 pointer-events-none" : ""
+                        }`}
+                    onClick={prevPage}
+                />
+                <p className=" text-lg font-medium">Page {page}</p>
+                <img
+                    src={nextButton}
+                    alt="次ページ"
+                    className={`w-11 h-10 ml-5 cursor-pointer ${!hasNextPage ? "opacity-30 pointer-events-none" : ""
+                        }`}
+                    onClick={nextPage}
+                />
             </div>
         </div>
     )
