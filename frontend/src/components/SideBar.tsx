@@ -30,6 +30,7 @@ export default function SideBar() {
     };
 
     const onSendClick = async () => {
+        // 送信ボタンをクリックした際に投稿内容をデータベースに保存
         await post(String(userInfo.id), userInfo.token, msg);
         await getPostList();
         setMsg("");
@@ -47,7 +48,7 @@ export default function SideBar() {
     return (
         <div className="h-full border-r-2 border-gray-400 px-4 py-4">
             <div className="flex items-center h-20">
-                <img src={userDetail2} alt="ユーザーアイコン" className="w-16 h-16 mr-2"/>
+                <img src={userDetail2} alt="ユーザーアイコン" className="w-16 h-16 mr-2" />
                 <div className="flex-col items-start space-y-1">
                     <div className="text-base sm:text-lg md:text-xl lg:text-2xl">{userName}</div>
                     <div className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600">{email}</div>
@@ -63,7 +64,7 @@ export default function SideBar() {
             </div>
             <div className=" flex justify-end">
                 <button onClick={onSendClick} className="bg-gray-900 hover:bg-gray-700 text-white px-4 py-1 rounded">
-                    送信
+                    投稿
                 </button>
             </div>
         </div>
