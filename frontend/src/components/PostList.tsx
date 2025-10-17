@@ -2,11 +2,11 @@ import { useContext, useEffect, useRef, useState } from "react"
 import { PostListContext, PostType } from "../providers/PostListContext"
 import { UserContext } from "../providers/UserProvider";
 import { getList } from "../api/Post";
+import Post from "./Post";
 import reloadButton from "../asset/img/reloadButton.png"
 import backButton from "../asset/img/backPageButton.png"
 import nextButton from "../asset/img/nextPageButton.png"
 import Search from "./Search";
-import Post from "./Post";
 
 export default function PostList() {
     // ポストリストコンテキスト、ユーザーコンテキストを使用する
@@ -15,6 +15,7 @@ export default function PostList() {
 
     // 元の投稿一覧を保存しておく
     const originalPosts = useRef<PostType[]>([]);
+    const [searchWord, setSearchWord] = useState("");
 
     // 現在のページを保持しておく
     const [page, setPage] = useState(1);
@@ -65,7 +66,25 @@ export default function PostList() {
         getPostList(page);
     }, [page]);
 
+    // 検索ボタンを押したときの処理
+    const handleSearch = (keyword: string) => {
+        const word = keyword.trim().toLowerCase();
 
+        // 空欄なら全件表示に戻す
+        if (!word) {
+            setPostList(originalPosts.current);
+            return;
+        }
+
+        // 投稿内容またはユーザー名に含まれるものを抽出
+        const result = originalPosts.current.filter(
+            (post) =>
+                post.content.toLowerCase().includes(word) ||
+                post.user_name.toLowerCase().includes(word)
+        );
+
+        setPostList(result);
+    };
 
     const onReloadClick = () => {
         // getPostList を呼んで最新データを取得する
@@ -102,9 +121,8 @@ export default function PostList() {
                 </button>
             </div>
             <div className="border p-4">
-                <Search />
-
-                <div className="flex-col">
+                <Search onSearch={handleSearch} />
+                <div>
                     {postList.map((p: PostType) => (
                         <Post key={p.id} post={p} />
                     ))}
