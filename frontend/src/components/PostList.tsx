@@ -2,10 +2,11 @@ import { useContext, useEffect, useRef, useState } from "react"
 import { PostListContext, PostType } from "../providers/PostListContext"
 import { UserContext } from "../providers/UserProvider";
 import { getList } from "../api/Post";
-import Post from "./Post";
 import reloadButton from "../asset/img/reloadButton.png"
 import backButton from "../asset/img/backPageButton.png"
 import nextButton from "../asset/img/nextPageButton.png"
+import Search from "./Search";
+import Post from "./Post";
 
 export default function PostList() {
     // ポストリストコンテキスト、ユーザーコンテキストを使用する
@@ -14,7 +15,6 @@ export default function PostList() {
 
     // 元の投稿一覧を保存しておく
     const originalPosts = useRef<PostType[]>([]);
-    const [searchWord, setSearchWord] = useState("");
 
     // 現在のページを保持しておく
     const [page, setPage] = useState(1);
@@ -65,25 +65,7 @@ export default function PostList() {
         getPostList(page);
     }, [page]);
 
-    // 検索ボタンを押したときの処理
-    const handleSearch = () => {
-        const word = searchWord.trim().toLowerCase();
 
-        // 空欄なら全件表示に戻す
-        if (!word) {
-            setPostList(originalPosts.current);
-            return;
-        }
-
-        // 投稿内容またはユーザー名に含まれるものを抽出
-        const result = originalPosts.current.filter(
-            (post) =>
-                post.content.toLowerCase().includes(word) ||
-                post.user_name.toLowerCase().includes(word)
-        );
-
-        setPostList(result);
-    };
 
     const onReloadClick = () => {
         // getPostList を呼んで最新データを取得する
@@ -120,23 +102,9 @@ export default function PostList() {
                 </button>
             </div>
             <div className="border p-4">
-                <div className="flex gap-2 mb-4">
-                    <input
-                        type="text"
-                        placeholder="検索ワードを入力"
-                        value={searchWord}
-                        onChange={(e) => setSearchWord(e.target.value)}
-                        className="flex-1 px-3 py-2 border rounded"
-                    />
-                    <button
-                        className="px-4 py-2 bg-gray-800 text-white rounded"
-                        onClick={handleSearch}
-                    >
-                        検索
-                    </button>
-                </div>
+                <Search />
 
-                <div>
+                <div className="flex-col">
                     {postList.map((p: PostType) => (
                         <Post key={p.id} post={p} />
                     ))}
