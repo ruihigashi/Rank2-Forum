@@ -13,6 +13,7 @@ export default function Search(props: SearchProps) {
     const handleSearch = () => {
         onSearch(searchWord)
     };
+
     return (
         <div className="flex gap-2 mb-4">
             <input

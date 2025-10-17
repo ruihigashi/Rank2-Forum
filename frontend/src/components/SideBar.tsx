@@ -4,6 +4,7 @@ import { PostListContext, PostType } from "../providers/PostListContext";
 import { post, getList } from "../api/Post";
 import { getUser } from "../api/User";
 import userDetail2 from "../asset/img/userDetaiButton2.png"
+import PostInput from "./PostInput";
 
 export default function SideBar() {
     const [msg, setMsg] = useState("");
@@ -29,10 +30,10 @@ export default function SideBar() {
         setPostList(postList);
     };
 
-    const onSendClick = async () => {
+    const handleSend = async (msg: string) => {
+        // 送信ボタンをクリックした際に投稿内容をデータベースに保存
         await post(String(userInfo.id), userInfo.token, msg);
         await getPostList();
-        setMsg("");
     }
 
     useEffect(() => {
@@ -47,25 +48,14 @@ export default function SideBar() {
     return (
         <div className="h-full border-r-2 border-gray-400 px-4 py-4">
             <div className="flex items-center h-20">
-                <img src={userDetail2} alt="ユーザーアイコン" className="w-16 h-16 mr-2"/>
+                <img src={userDetail2} alt="ユーザーアイコン" className="w-16 h-16 mr-2" />
                 <div className="flex-col items-start space-y-1">
                     <div className="text-base sm:text-lg md:text-xl lg:text-2xl">{userName}</div>
                     <div className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600">{email}</div>
                 </div>
             </div>
-            <div>
-                <textarea
-                    rows={4}
-                    value={msg}
-                    onChange={(evt) => setMsg(evt.target.value)}
-                    className="border-2 border-gray-400 w-full mt-6 rounded-md"
-                ></textarea>
-            </div>
-            <div className=" flex justify-end">
-                <button onClick={onSendClick} className="bg-gray-900 hover:bg-gray-700 text-white px-4 py-1 rounded">
-                    送信
-                </button>
-            </div>
+
+            <PostInput onSend={handleSend}/>
         </div>
     )
 }
