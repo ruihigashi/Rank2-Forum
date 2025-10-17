@@ -1,24 +1,17 @@
 import { useContext, useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom"
-import { UserContext } from "../providers/UserProvider";
 import { getUser } from "../api/User";
-import logoutImg from "../asset/img/LogoutButton.png";
-import userDetail from "../asset/img/userDetailButton.png"
+import userDetail from "../asset/img/userDetailButton.png";
+import { UserContext } from "../providers/UserProvider";
+import LogoutButton from "./LogoutButton";
 import UserDetailModal from "./UserDetailModal";
 
 export default function Header() {
-    const navigate = useNavigate();
     const [userName, setUserName] = useState("");
     // モーダル表示のための状態を追加
     const [showModal, setShowModal] = useState(false);
     // モーダル内で表示するユーザー詳細を保持する状態
     const [userDetails, setUserDetails] = useState<any>(null);
-    const { userInfo, setUserInfo } = useContext(UserContext);
-
-    const logout = () => {
-        setUserInfo({ id: 0, token: "" });
-        navigate("/");
-    }
+    const { userInfo } = useContext(UserContext);
 
     useEffect(() => {
         const myGetUser = async () => {
@@ -63,9 +56,7 @@ export default function Header() {
                             <img src={userDetail} alt="ユーザー詳細ボタン" />
                         </button>
                     </span>
-                    <button onClick={logout} className="p-1 rounded hover:bg-gray-800">
-                        <img src={logoutImg} alt="ログアウト" className="w-6 h-6 object-contain" />
-                    </button>
+                    <LogoutButton />
                 </div>
             </div>
 

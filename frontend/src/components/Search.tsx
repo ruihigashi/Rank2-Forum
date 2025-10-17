@@ -4,7 +4,8 @@ type SearchProps = {
     onSearch: (keyword: string) => void;
 };
 
-export default function Search({ onSearch }: SearchProps) {
+export default function Search(props: SearchProps) {
+    const { onSearch } = props;
 
     const [searchWord, setSearchWord] = useState("");
 
