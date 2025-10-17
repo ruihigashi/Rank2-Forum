@@ -1,32 +1,16 @@
-import { useContext, useRef, useState } from "react"
-import { PostListContext, PostType } from "../providers/PostListContext";
+import { useState } from "react"
 
-export default function Search() {
-    // ポストリストコンテキスト、ユーザーコンテキストを使用する
-    const { postList, setPostList } = useContext(PostListContext);
+type SearchProps = {
+    onSearch: (keyword: string) => void;
+};
 
-    // 元の投稿一覧を保存しておく
-    const originalPosts = useRef<PostType[]>([]);
+export default function Search({ onSearch }: SearchProps) {
+
     const [searchWord, setSearchWord] = useState("");
 
     // 検索ボタンを押したときの処理
     const handleSearch = () => {
-        const word = searchWord.trim().toLowerCase();
-
-        // 空欄なら全件表示に戻す
-        if (!word) {
-            setPostList(originalPosts.current);
-            return;
-        }
-
-        // 投稿内容またはユーザー名に含まれるものを抽出
-        const result = originalPosts.current.filter(
-            (post) =>
-                post.content.toLowerCase().includes(word) ||
-                post.user_name.toLowerCase().includes(word)
-        );
-
-        setPostList(result);
+        onSearch(searchWord)
     };
     return (
         <div className="flex gap-2 mb-4">
