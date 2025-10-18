@@ -110,7 +110,7 @@ export default function PostList() {
     }
 
     return (
-        <div className="px-4 py-4 display justify-center">
+        <div className="px-4 py-4 display justify-center h-full">
             <div className="flex items-center justify-between px-8">
                 <p className="text-4xl mb-4 font-medium text-center flex-1">PostList</p>
                 <button
@@ -120,30 +120,32 @@ export default function PostList() {
                     <img src={reloadButton} alt="リロードボタン" className="w-6 h-5" />
                 </button>
             </div>
-            <div className="border p-4">
+
+
+        <div className="border p-4 h-full grid grid-rows-[4rem,1fr,4rem]" style={{ gridTemplateRows :"4rem 1fr 7rem"}}>
                 <Search onSearch={handleSearch} />
-                <div>
+                <div className="h-full overflow-y-auto bg-gray-100">
                     {postList.map((p: PostType) => (
                         <Post key={p.id} post={p} />
                     ))}
                 </div>
-            </div>
-            <div className="flex justify-center mt-3 items-center">
-                <img
-                    src={backButton}
-                    alt="前ページ"
-                    className={`w-10 h-10 mr-5 cursor-pointer ${page === 1 ? "opacity-30 pointer-events-none" : ""
-                        }`}
-                    onClick={prevPage}
-                />
-                <p className=" text-lg font-medium">Page {page}</p>
-                <img
-                    src={nextButton}
-                    alt="次ページ"
-                    className={`w-11 h-10 ml-5 cursor-pointer ${!hasNextPage ? "opacity-30 pointer-events-none" : ""
-                        }`}
-                    onClick={nextPage}
-                />
+                <div className="flex justify-center">
+                    <img
+                        src={backButton}
+                        alt="前ページ"
+                        className={`w-10 h-10 mr-5 cursor-pointer ${page === 1 ? "opacity-30 pointer-events-none" : ""
+                            }`}
+                        onClick={prevPage}
+                    />
+                    <p className=" text-lg font-medium">Page {page}</p>
+                    <img
+                        src={nextButton}
+                        alt="次ページ"
+                        className={`w-11 h-10 ml-5 cursor-pointer ${!hasNextPage ? "opacity-30 pointer-events-none" : ""
+                            }`}
+                        onClick={nextPage}
+                    />
+                </div>
             </div>
         </div>
     )

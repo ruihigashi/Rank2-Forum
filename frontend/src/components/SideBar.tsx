@@ -1,13 +1,12 @@
-import { useContext, useEffect, useState } from "react"
-import { UserContext } from "../providers/UserProvider";
-import { PostListContext, PostType } from "../providers/PostListContext";
-import { post, getList } from "../api/Post";
+import { useContext, useEffect, useState } from "react";
+import { getList, post } from "../api/Post";
 import { getUser } from "../api/User";
-import userDetail2 from "../asset/img/userDetaiButton2.png"
+import userDetail2 from "../asset/img/userDetaiButton2.png";
+import { PostListContext, PostType } from "../providers/PostListContext";
+import { UserContext } from "../providers/UserProvider";
 import PostInput from "./PostInput";
 
 export default function SideBar() {
-    const [msg, setMsg] = useState("");
     const { userInfo } = useContext(UserContext); // コンテキストからuserInfoを取り出す
     const { setPostList } = useContext(PostListContext);
     const [userName, setUserName] = useState("");

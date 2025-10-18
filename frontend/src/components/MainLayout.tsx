@@ -6,7 +6,7 @@ import Contents from "./Contents";
 
 export default function MainLayout() {
     return (
-        <>
+        <div className="w-screen h-screen max-h-screen overflow-hidden">
             <SHeader>
                 <Header></Header>
             </SHeader>
@@ -18,7 +18,7 @@ export default function MainLayout() {
                     <Contents></Contents>
                 </SContents>
             </SBody>
-        </>
+        </div>
     )
 }
 
