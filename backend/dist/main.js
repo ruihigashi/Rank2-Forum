@@ -39,8 +39,13 @@ const core_1 = require("@nestjs/core");
 const app_module_1 = require("./app.module");
 async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
-    app.enableCors();
-    await app.listen(process.env.PORT ?? 3000);
+    const port = process.env.PORT || 3000;
+    app.enableCors({
+        origin: '*',
+        allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept',
+    });
+    console.log(`Listening on port ${port}`);
+    await app.listen(port ?? '0.0.0.0');
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

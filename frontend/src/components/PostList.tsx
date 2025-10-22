@@ -15,7 +15,6 @@ export default function PostList() {
 
     // 元の投稿一覧を保存しておく
     const originalPosts = useRef<PostType[]>([]);
-    const [searchWord, setSearchWord] = useState("");
 
     // 現在のページを保持しておく
     const [page, setPage] = useState(1);

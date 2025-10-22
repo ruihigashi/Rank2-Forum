@@ -5,7 +5,14 @@ import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
-    app.enableCors(); // CORSを有効化
-  await app.listen(process.env.PORT ?? 3000);
+  const port = process.env.PORT || 3000; // 環境変数から使用ポートを取得
+
+  app.enableCors({
+    origin: '*',
+    allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept',
+  })
+
+  console.log(`Listening on port ${port}`);
+  await app.listen(port ?? '0.0.0.0');
 }
 bootstrap();

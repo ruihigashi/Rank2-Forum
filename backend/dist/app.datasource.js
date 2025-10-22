@@ -38,13 +38,24 @@ const dotenv = __importStar(require("dotenv"));
 dotenv.config();
 const AppDataSource = new typeorm_1.DataSource({
     type: "postgres",
-    host: process.env.DB_HOST,
-    port: Number(process.env.DB_PORT),
-    username: process.env.DB_USER,
-    password: process.env.DB_PASS,
-    database: process.env.DB_NAME,
+    ...(process.env.DATABASE_URL
+        ? {
+            url: process.env.DATABASE_URL,
+            ssl: process.env.DATABASE_URL.includes("render.com")
+                ? { rejectUnauthorized: false }
+                : false,
+        }
+        : {
+            host: process.env.DB_HOST,
+            port: Number(process.env.DB_PORT),
+            username: process.env.DB_USER,
+            password: process.env.DB_PASS,
+            database: process.env.DB_NAME,
+        }),
     entities: [__dirname + "/entities/*{.ts,.js}"],
     migrations: [__dirname + "/migrations/*{.ts,.js}"],
+    synchronize: false,
+    logging: true,
 });
 exports.default = AppDataSource;
 //# sourceMappingURL=app.datasource.js.map
