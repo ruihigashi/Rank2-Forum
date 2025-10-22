@@ -8,11 +8,11 @@ async function bootstrap() {
   const port = process.env.PORT || 3000; // 環境変数から使用ポートを取得
 
   app.enableCors({
-    origin: '*',
+    origin: 'https://rank2-forum.onrender.com',
     allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept',
   })
 
-  console.log(`Listening on port ${port}`);
-  await app.listen(port ?? '0.0.0.0');
+  // console.log(`Listening on port ${port}, host 0.0.0.0`);
+  await app.listen(port, '0.0.0.0');
 }
 bootstrap();
