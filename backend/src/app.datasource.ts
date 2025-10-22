@@ -3,14 +3,14 @@ import * as dotenv from 'dotenv'
 
 dotenv.config();
 
+console.log('DATABASE_URL:', process.env.DATABASE_URL);
+
 const AppDataSource = new DataSource({
     type: "postgres", // 使用するデータベースの種類
     ...(process.env.DATABASE_URL
         ? {
             url: process.env.DATABASE_URL,
-            ssl: process.env.DATABASE_URL.includes("render.com")
-                ? { rejectUnauthorized: false }
-                : false,
+            ssl: { rejectUnauthorized: false },
         }
         : {
             host: process.env.DB_HOST, // データベースサーバーのホスト名
