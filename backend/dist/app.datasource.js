@@ -41,9 +41,7 @@ const AppDataSource = new typeorm_1.DataSource({
     ...(process.env.DATABASE_URL
         ? {
             url: process.env.DATABASE_URL,
-            ssl: process.env.DATABASE_URL.includes("render.com")
-                ? { rejectUnauthorized: false }
-                : false,
+            ssl: { rejectUnauthorized: false },
         }
         : {
             host: process.env.DB_HOST,
