@@ -8,14 +8,14 @@ export default function MainLayout() {
     return (
         <div className="w-screen h-screen max-h-screen overflow-hidden">
             <SHeader>
-                <Header></Header>
+                <Header/>
             </SHeader>
             <SBody>
                 <SSideBar>
-                    <SideBar></SideBar>
+                    <SideBar/>
                 </SSideBar>
                 <SContents>
-                    <Contents></Contents>
+                    <Contents/>
                 </SContents>
             </SBody>
         </div>
