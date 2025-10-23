@@ -1,8 +1,5 @@
 import { useState } from "react"
-
-interface PostInputProps {
-    onSend: (message: string) => Promise<void>;
-}
+import { PostInputProps } from "../types/Props";
 
 export default function PostInput(props: PostInputProps) {
     const { onSend } = props;

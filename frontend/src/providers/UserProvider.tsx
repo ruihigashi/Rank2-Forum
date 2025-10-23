@@ -1,10 +1,6 @@
-import { Dispatch, SetStateAction, useState, createContext } from "react";
-
-// 保持する情報の型
-type UserInfo = {
-    id: number;
-    token: string;
-}
+import React, { Dispatch, SetStateAction, useState, createContext } from "react";
+import { UserInfo } from "../types/User";
+import { ChildrenProps } from "../types/Props";
 
 // UserContextの作成
 // UserContextにはProviderとConsumerの二つのフィールドが含まれる
@@ -16,8 +12,7 @@ export const UserContext = createContext (
 );
 
 // UserProviderの定義
-export const UserProvider = (props: any) => {
-    const {children} = props;
+export const UserProvider = ({ children }: ChildrenProps) => {
     // UserInfoを保持する変数と更新関数の作成
     const [userInfo, setUserInfo] = useState<UserInfo>({ id: 0, token: ""});
     return (

@@ -1,12 +1,6 @@
-import { Dispatch, SetStateAction, useState, createContext } from "react";
-
-// ポストを保持する型を定義
-export type PostType = {
-    id: number;
-    user_name: string;
-    content: string;
-    created_at: Date;
-}
+import React, { Dispatch, SetStateAction, useState, createContext } from "react";
+import { PostType } from "../types/Post";
+import { ChildrenProps } from "../types/Props";
 
 export const PostListContext = createContext(
     {} as {
@@ -15,8 +9,7 @@ export const PostListContext = createContext(
     },
 );
 
-export const PostListProvider = (props: any) => {
-    const {children} = props;
+export const PostListProvider = ({ children }: ChildrenProps) => {
     const [postList, setPostList] = useState<PostType[]>([]);
     return (
         <PostListContext.Provider value={{ postList, setPostList}}>

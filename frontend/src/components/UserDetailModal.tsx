@@ -1,16 +1,10 @@
 import { useEffect, useState } from "react";
 import closeModal from "../asset/img/closeModalButton.png"
 import { updateUser } from "../api/User";
+import { ModalProps } from "../types/Props";
 
-type Props = {
-    show: boolean;
-    onClose: () => void;
-    userDetails: any | null;
-    onUpdated?: (updated: any) => void;
-    token?: string;
-};
 
-export default function UserDetailModal({ show, onClose, userDetails, onUpdated, token }: Props) {
+export default function UserDetailModal({ show, onClose, userDetails, onUpdated, token }: ModalProps) {
     const [editing, setEditing] = useState(false);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
@@ -21,7 +15,7 @@ export default function UserDetailModal({ show, onClose, userDetails, onUpdated,
     useEffect(() => {
         if (userDetails) {
             setName(userDetails.name || "");
-            setEmail(userDetails.umail || userDetails.email || "");
+            setEmail(userDetails.umail || "");
             setCreatedAt(userDetails.created_at ? new Date(userDetails.created_at).toISOString() : "");
         }
     }, [userDetails]);
@@ -33,6 +27,7 @@ export default function UserDetailModal({ show, onClose, userDetails, onUpdated,
         setLoading(true);
         try {
             const tokenToUse = (token ? token : "");
+            if (!userDetails) { setError("User details not available."); setLoading(false); return; }
             const updated = await updateUser(name, email, createdAt || new Date().toISOString(), tokenToUse, userDetails.id);
             if (onUpdated) onUpdated(updated);
             setEditing(false);
@@ -51,7 +46,7 @@ export default function UserDetailModal({ show, onClose, userDetails, onUpdated,
             <div className="absolute inset-0 bg-black opacity-40" onClick={onClose}></div>
 
             <div className="relative bg-white rounded-lg shadow-lg p-6 w-full max-w-md z-10">
-                <div className="mt-1 text-right">
+                <div className="mt-1 東right">
                     <button onClick={onClose} className="text-gray-900 rounded w-5 h-5">
                         <img src={closeModal} alt="閉じる" />
                     </button>
@@ -70,7 +65,7 @@ export default function UserDetailModal({ show, onClose, userDetails, onUpdated,
                                     <strong className="text-gray-500">ユーザー名:</strong> {userDetails.name}
                                 </p>
                                 <p className="mb-2">
-                                    <strong className="text-gray-500">メールアドレス:</strong> {userDetails.umail || userDetails.email}
+                                    <strong className="text-gray-500">メールアドレス:</strong> {userDetails.umail}
                                 </p>
                                 <div className="flex justify-center">
                                     <button onClick={() => setEditing(true)} className="text-white bg-blue-500 mt-4 px-6 py-2 rounded">

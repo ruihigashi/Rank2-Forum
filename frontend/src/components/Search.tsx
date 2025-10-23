@@ -1,8 +1,5 @@
 import { useState } from "react"
-
-type SearchProps = {
-    onSearch: (keyword: string) => void;
-};
+import { SearchProps } from "../types/Props";
 
 export default function Search(props: SearchProps) {
     const { onSearch } = props;
