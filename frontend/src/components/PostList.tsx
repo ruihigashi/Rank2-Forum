@@ -1,4 +1,4 @@
-import { useContext, useEffect, useRef, useState } from "react"
+import { useCallback, useContext, useEffect, useRef, useState } from "react"
 import { PostListContext } from "../providers/PostListContext"
 import { UserContext } from "../providers/UserProvider";
 import { getList } from "../api/Post";
@@ -25,7 +25,7 @@ export default function PostList() {
 
 
     // ポスト一覧を取得する関数(各ページごと)
-    const getPostList = async (pageNum = 1) => {
+    const getPostList = useCallback(async (pageNum = 1) => {
         try {
             const posts = await getList(userInfo.token, pageNum);
 
@@ -55,17 +55,17 @@ export default function PostList() {
             // ポスト一覧を取得できなかった際にコンソール表示
             console.error("投稿一覧取得中にエラー:", err);
         }
-    };
+    }, [userInfo.token, setPostList]);
 
     // 描画時にポスト一覧を取得する（初回レンダー時）
     useEffect(() => {
         getPostList(1);
-    }, [])
+    }, [getPostList])
 
     // ページ変更時に再取得
     useEffect(() => {
         getPostList(page);
-    }, [page]);
+    }, [page, getPostList]);
 
     // 検索ボタンを押したときの処理
     const handleSearch = (keyword: string) => {
