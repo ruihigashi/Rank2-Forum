@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Post, Query } from '@nestjs/common';
 import { PostService } from './post.service';
-import { NumericType } from 'typeorm';
+import { CreatePostDto } from './dto/create-post.dto';
 
 @Controller('post')
 export class PostController {
@@ -8,10 +8,10 @@ export class PostController {
 
     @Post()
     async createPost(
-        @Body('message') message: string,
+        @Body() createPostDto: CreatePostDto,
         @Query('token') token: string
     ) {
-        return await this.postService.createPost(message, token)
+        return await this.postService.createPost(createPostDto.message, token)
     }
 
     @Get()
