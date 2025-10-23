@@ -7,8 +7,7 @@ import MainLayout from '../components/MainLayout';
 export default function Main () {
     const { userInfo } = useContext(UserContext);
     const loggedIn = (userInfo.token !== '');
-
-    console.log(loggedIn)
+    
     return (
         <PostListProvider>
             {

@@ -16,7 +16,8 @@ export default function Register() {
             await createUser(userName, email, password);
             navigate('/');
         } catch (err) {
-            console.error('登録に失敗しました', err); // 登録に失敗すればコンソールにエラーを表示
+            // 登録失敗した際にコンソールにエラーを表示
+            console.error('登録に失敗しました', err); 
         }
     }
 

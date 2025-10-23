@@ -9,6 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.AppModule = void 0;
 const common_1 = require("@nestjs/common");
 const typeorm_1 = require("@nestjs/typeorm");
+const config_1 = require("@nestjs/config");
 const app_controller_1 = require("./app.controller");
 const app_service_1 = require("./app.service");
 const user_module_1 = require("./user/user.module");
@@ -20,14 +21,30 @@ exports.AppModule = AppModule;
 exports.AppModule = AppModule = __decorate([
     (0, common_1.Module)({
         imports: [
-            typeorm_1.TypeOrmModule.forRoot({
-                type: 'postgres',
-                host: process.env.DB_HOST,
-                username: process.env.DB_USER,
-                password: process.env.DB_PASS,
-                database: process.env.DB_NAME,
-                autoLoadEntities: true,
-                synchronize: true,
+            config_1.ConfigModule.forRoot({
+                isGlobal: true,
+                ignoreEnvFile: process.env.NODE_ENV === 'production',
+            }),
+            typeorm_1.TypeOrmModule.forRootAsync({
+                imports: [config_1.ConfigModule],
+                inject: [config_1.ConfigService],
+                useFactory: (configService) => ({
+                    type: 'postgres',
+                    ...(configService.get('DATABASE_URL')
+                        ? {
+                            url: configService.get('DATABASE_URL'),
+                            ssl: { rejectUnauthorized: false },
+                        }
+                        : {
+                            host: configService.get('DB_HOST'),
+                            port: Number(configService.get('DB_PORT')),
+                            username: configService.get('DB_USER'),
+                            password: configService.get('DB_PASS'),
+                            database: configService.get('DB_NAME'),
+                        }),
+                    autoLoadEntities: true,
+                    synchronize: false,
+                }),
             }),
             user_module_1.UserModule,
             post_module_1.PostModule,

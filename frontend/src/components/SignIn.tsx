@@ -21,9 +21,11 @@ export default function SignIn() {
                 });
                 navigate('/main'); // メイン画面に遷移
             } else {
+                // サインインの際にトークンが返ってこずサインインできないことをコンソールに表示
                 console.error('Sign in failed: no token in response', ret);
             }
         } catch (err) {
+            // サインインできなかった際にコンソールにエラーを表示
             console.error('Sign in error', err);
         }
     }

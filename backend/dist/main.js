@@ -41,11 +41,10 @@ async function bootstrap() {
     const app = await core_1.NestFactory.create(app_module_1.AppModule);
     const port = process.env.PORT || 3000;
     app.enableCors({
-        origin: '*',
+        origin: 'https://rank2-forum.onrender.com',
         allowedHeaders: 'Origin, X-Requested-With, Content-Type, Accept',
     });
-    console.log(`Listening on port ${port}`);
-    await app.listen(port ?? '0.0.0.0');
+    await app.listen(port, '0.0.0.0');
 }
 bootstrap();
 //# sourceMappingURL=main.js.map

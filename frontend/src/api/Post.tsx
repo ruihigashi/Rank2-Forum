@@ -9,8 +9,7 @@ const post = async (user_id: string, token: string, msg: string) => {
     };
     const url = `${API_BASE_URL}/post?user_id=${user_id}&token=${token}`;
     const res = await axios.post(url, data);
-    console.log(res);
-
+    return res.data;
 }
 
 const getList = async (token: string, page: number = 1) => {

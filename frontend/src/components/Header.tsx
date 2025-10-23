@@ -7,7 +7,6 @@ import UserDetailModal from "./UserDetailModal";
 import { UserType } from "../types/User";
 
 export default function Header() {
-    const [userName, setUserName] = useState("");
     // モーダル表示のための状態を追加
     const [showModal, setShowModal] = useState(false);
     // モーダル内で表示するユーザー詳細を保持する状態
@@ -17,11 +16,8 @@ export default function Header() {
     useEffect(() => {
         const myGetUser = async () => {
             try {
-                const user = await getUser(userInfo.id, userInfo.token);
-                setUserName(user.name);
+                await getUser(userInfo.id, userInfo.token);
             } catch (err) {
-                console.error('ユーザー取得エラー', err);
-                setUserName("");
             }
         };
         myGetUser();
@@ -35,7 +31,6 @@ export default function Header() {
             setUserDetails(user);
             setShowModal(true);
         } catch (err) {
-            console.error('ユーザー詳細取得エラー', err);
             alert('ユーザー情報の取得に失敗しました');
         }
     }
@@ -61,7 +56,7 @@ export default function Header() {
                 </div>
             </div>
 
-            <UserDetailModal show={showModal} onClose={closeUserModal} userDetails={userDetails} onUpdated={(u: UserType)=>{ setUserName(u.name); }} token={userInfo.token} />
+            <UserDetailModal show={showModal} onClose={closeUserModal} userDetails={userDetails} token={userInfo.token} />
         </>
     );
 }
