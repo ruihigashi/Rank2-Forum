@@ -6,17 +6,21 @@ import { ModalProps } from "../types/Props";
 
 export default function UserDetailModal({ show, onClose, userDetails, onUpdated, token }: ModalProps) {
     const [editing, setEditing] = useState(false);
-    const [name, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [createdAt, setCreatedAt] = useState("");
+    const [userData, setUserData] = useState({
+        name: '',
+        email: '',
+        createdAt: ''
+    });
     const [loading, setLoading] = useState(false);
     const [error, setError] = useState<string | null>(null);
 
     useEffect(() => {
         if (userDetails) {
-            setName(userDetails.name || "");
-            setEmail(userDetails.umail || "");
-            setCreatedAt(userDetails.created_at ? new Date(userDetails.created_at).toISOString() : "");
+            setUserData({
+                name: userDetails.name || "",
+                email: userDetails.umail || "",
+                createdAt: userDetails.created_at ? new Date(userDetails.created_at).toISOString() : "",
+            });
         }
     }, [userDetails]);
 
@@ -28,7 +32,7 @@ export default function UserDetailModal({ show, onClose, userDetails, onUpdated,
         try {
             const tokenToUse = (token ? token : "");
             if (!userDetails) { setError("User details not available."); setLoading(false); return; }
-            const updated = await updateUser(name, email, createdAt || new Date().toISOString(), tokenToUse, userDetails.id);
+            const updated = await updateUser(userData.name, userData.email, userData.createdAt || new Date().toISOString(), tokenToUse, userDetails.id);
             if (onUpdated) onUpdated(updated);
             setEditing(false);
             onClose();
@@ -77,11 +81,11 @@ export default function UserDetailModal({ show, onClose, userDetails, onUpdated,
                                 <h3 className="text-xl font-semibold mb-4">ユーザー情報編集</h3>
                                 <label className="block mb-2">
                                     <span className="text-sm text-gray-700">ユーザー名</span>
-                                    <input value={name} onChange={(e) => setName(e.target.value)} className="mt-1 block w-full border rounded px-2 py-1" />
+                                    <input value={userData.name} onChange={(e) => setUserData({ ...userData, name: e.target.value })} className="mt-1 block w-full border rounded px-2 py-1" />
                                 </label>
                                 <label className="block mb-2">
                                     <span className="text-sm text-gray-700">メールアドレス</span>
-                                    <input value={email} onChange={(e) => setEmail(e.target.value)} className="mt-1 block w-full border rounded px-2 py-1" />
+                                    <input value={userData.email} onChange={(e) => setUserData({ ...userData, email: e.target.value })} className="mt-1 block w-full border rounded px-2 py-1" />
                                 </label>
 
                                 <div className="flex justify-center gap-2 mt-4">

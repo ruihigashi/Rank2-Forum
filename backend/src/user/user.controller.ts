@@ -1,5 +1,7 @@
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
 import { UserService } from './user.service';
+import { CreateUserDto } from './dto/create-user.dto';
+import { UpdateUserDto } from './dto/update-user.dto';
 
 @Controller('user')
 export class UserController {
@@ -11,12 +13,8 @@ export class UserController {
     }
 
     @Post()
-    createUser(
-        @Body('name') name: string,
-        @Body('email') email: string,
-        @Body('password') password: string 
-    ){
-        this.userService.createUser(name, email, password);
+    createUser(@Body() createUserDto: CreateUserDto){
+        this.userService.createUser(createUserDto.name, createUserDto.email, createUserDto.password);
     }
 
     @Get(':id')
@@ -25,14 +23,8 @@ export class UserController {
     }
 
     @Post('update')
-    async updateUser(
-        @Body('name') name: string,
-        @Body('email') email: string,
-        @Body('created_at') created_at: string,
-        @Body('id') id: number,
-        @Body('token') token: string,
-    ) {
-        console.log('[UserController] updateUser called:', { name, email, created_at, id });
-        return await this.userService.updateUser(name, email, id, token, created_at);
+    async updateUser(@Body() updateUserDto: UpdateUserDto) {
+        console.log('[UserController] updateUser called:', { name: updateUserDto.name, email: updateUserDto.email, created_at: updateUserDto.created_at, id: updateUserDto.id });
+        return await this.userService.updateUser(updateUserDto.name, updateUserDto.email, updateUserDto.id, updateUserDto.token);
     }
 }

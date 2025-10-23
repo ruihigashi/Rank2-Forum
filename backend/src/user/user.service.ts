@@ -16,10 +16,10 @@ export class UserService {
 
     async createUser(name: string, email: string, password: string) {
         // ソルトラウンド数を指定します（10が一般的）
-        const saltRounds = 10;
+        const SALT_ROUNDS = 10;
 
         // awaitを使用してパスワードのハッシュ化を非同期で行う
-        const hash = await bcrypt.hash(password, saltRounds);
+        const hash = await bcrypt.hash(password, SALT_ROUNDS);
 
         const record = {
             name: name,
@@ -54,7 +54,7 @@ export class UserService {
         return user;
     }
 
-    async updateUser(name: string, email:string, id: number, token: string, created_at?: string) {
+    async updateUser(name: string, email:string, id: number, token: string): Promise<Omit<User, 'hash'>> {
         // 認証トークンの検証
         const now = new Date();
         const auth = await this.auhtRepository.findOne({
@@ -81,21 +81,11 @@ export class UserService {
         // 更新するフィールドを適用
         if (name) user.name = name;
         if (email) user.umail = email;
-        if (created_at) {
-            // created_at を文字列で受け取るため、Date に変換して代入
-            const dt = new Date(created_at);
-            if (!isNaN(dt.getTime())) {
-                // @ts-ignore: created_at はエンティティで readonly になっていることがあるが、更新要求を受け入れる
-                user.created_at = dt as any;
-            }
-        }
 
         const updated = await this.userRepository.save(user);
 
         // 返却時には hash を除外して返す
-        // 浅いコピーを作成して hash を削除
-        const safeUser: any = { ...updated };
-        delete safeUser.hash;
+        const { hash, ...safeUser } = updated;
         return safeUser;
     }
 }

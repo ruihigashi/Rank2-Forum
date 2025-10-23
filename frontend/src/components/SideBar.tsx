@@ -10,8 +10,11 @@ import { PostType } from "../types/Post";
 export default function SideBar() {
     const { userInfo } = useContext(UserContext); // コンテキストからuserInfoを取り出す
     const { setPostList } = useContext(PostListContext);
-    const [userName, setUserName] = useState("");
-    const [email, setEmail] = useState("");
+
+    const [userData, setUserData] = useState({
+        userName: '',
+        email: ''
+    })  
 
     const getPostList = async () => {
         const posts = await getList(userInfo.token);
@@ -38,8 +41,8 @@ export default function SideBar() {
     useEffect(() => {
         const myGetUser = async () => {
             const user = await getUser(userInfo.id, userInfo.token);
-            setUserName(user.name);
-            setEmail(user.umail);
+            setUserData(user.name);
+            setUserData(user.umail);
         };
         myGetUser();
     }, []);
@@ -49,8 +52,8 @@ export default function SideBar() {
             <div className="flex items-center h-20">
                 <img src={userDetail2} alt="ユーザーアイコン" className="w-16 h-16 mr-2" />
                 <div className="flex-col items-start space-y-1">
-                    <div className="text-base sm:text-lg md:text-xl lg:text-2xl">{userName}</div>
-                    <div className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600">{email}</div>
+                    <div className="text-base sm:text-lg md:text-xl lg:text-2xl">{userData.userName}</div>
+                    <div className="text-sm sm:text-base md:text-lg lg:text-xl text-gray-600">{userData.email}</div>
                 </div>
             </div>
 

@@ -1,23 +1,24 @@
-
 import { useState } from "react";
 import { createUser } from "../api/User";
 import { useNavigate } from "react-router-dom";
 
 export default function Register() {
 
-    const [userName, setName] = useState("");
-    const [email, setEmail] = useState("");
-    const [password, setPassword] = useState("");
+    const [formData, setFormData] = useState({
+        userName: '',
+        email: '',
+        password: ''
+    });
     const navigate = useNavigate();
 
     const onRegisterClick = async () => {
         // 登録画面にて、入力した内容をbackendに渡して処理が成功すればログイン画面に戻る処理
         try {
-            await createUser(userName, email, password);
+            await createUser(formData.userName, formData.email, formData.password);
             navigate('/');
         } catch (err) {
             // 登録失敗した際にコンソールにエラーを表示
-            console.error('登録に失敗しました', err); 
+            console.error('登録に失敗しました', err);
         }
     }
 
@@ -31,8 +32,8 @@ export default function Register() {
                         <input
                             id="id"
                             type="text"
-                            value={userName}
-                            onChange={(evt) => setName(evt.target.value)}
+                            value={formData.userName}
+                            onChange={(evt) => setFormData({ ...formData, userName: evt.target.value })}
                             className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-300"
                         />
                     </div>
@@ -41,8 +42,8 @@ export default function Register() {
                         <input
                             id="password"
                             type="email"
-                            value={email}
-                            onChange={(evt) => setEmail(evt.target.value)}
+                            value={formData.email}
+                            onChange={(evt) => setFormData({ ...formData, email: evt.target.value })}
                             className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-300"
                         />
                     </div>
@@ -51,8 +52,8 @@ export default function Register() {
                         <input
                             id="password"
                             type="password"
-                            value={password}
-                            onChange={(evt) => setPassword(evt.target.value)}
+                            value={formData.password}
+                            onChange={(evt) => setFormData({ ...formData, password: evt.target.value })}
                             className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-300"
                         />
                     </div>
