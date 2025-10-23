@@ -6,13 +6,15 @@ import { UserContext } from "../providers/UserProvider";
 
 export default function SignIn() {
     const navigate = useNavigate(); // navigateオブジェクトの作成
-    const [email, setEmail] = useState(''); // ユーザーIDを保持するstate
-    const [password, setPass] = useState(''); // パスワードを保持するstate
+    const [credentials, setCredentials] = useState({
+        email: '', 
+        password: ''
+    });
     const { setUserInfo } = useContext(UserContext); //setUserInfoの取り出し
 
     const onSignInClick = async () => {
         try {
-            const ret = await sign_in(email, password);
+            const ret = await sign_in(credentials.email, credentials.password);
             if (ret && ret.token) {
                 // setUserInfoを使用してコンテキストにユーザー情報を保存する
                 setUserInfo({
@@ -38,9 +40,9 @@ export default function SignIn() {
                     <label htmlFor="id" className="block text-gray-700 mb-1">メールアドレス</label>
                     <input
                         id="id"
-                        value={email}
+                        value={credentials.email}
                         type="text"
-                        onChange={(evt) => setEmail(evt.target.value)}
+                        onChange={(evt) => setCredentials({ ...credentials, email: evt.target.value })}
                         className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-300"
                     />
                 </div>
@@ -48,9 +50,9 @@ export default function SignIn() {
                     <label htmlFor="password" className="block text-gray-700 mb-1">パスワード</label>
                     <input
                         id="password"
-                        value={password}
+                        value={credentials.password}
                         type="password"
-                        onChange={(evt) => setPass(evt.target.value)}
+                        onChange={(evt) => setCredentials({ ...credentials, password: evt.target.value })}
                         className="w-full px-3 py-2 border rounded focus:outline-none focus:ring-2 focus:ring-gray-300"
                     />
                 </div>
@@ -63,8 +65,8 @@ export default function SignIn() {
                 </button>
                 <button
                     type="button"
-                    onClick={() => {navigate("/register")}}
-                    className="w-full hover:bg-gray-900 hover:text-white text-brack font-semibold py-2 px-4 mt-2 rounded transition border-gray-400 border-2" 
+                    onClick={() => { navigate("/register") }}
+                    className="w-full hover:bg-gray-900 hover:text-white text-brack font-semibold py-2 px-4 mt-2 rounded transition border-gray-400 border-2"
                 >
                     新規登録
                 </button>
