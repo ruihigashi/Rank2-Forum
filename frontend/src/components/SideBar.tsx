@@ -41,8 +41,10 @@ export default function SideBar() {
     useEffect(() => {
         const myGetUser = async () => {
             const user = await getUser(userInfo.id, userInfo.token);
-            setUserData(user.name);
-            setUserData(user.umail);
+            setUserData({
+                userName: user.name,
+                email: user.umail
+            });
         };
         myGetUser();
     }, []);
