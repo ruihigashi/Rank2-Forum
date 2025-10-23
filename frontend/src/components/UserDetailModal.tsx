@@ -33,7 +33,6 @@ export default function UserDetailModal({ show, onClose, userDetails, onUpdated,
             setEditing(false);
             onClose();
         } catch (err: any) {
-            console.error(err);
             const respData = err?.response?.data;
             setError(typeof respData === 'string' ? respData : JSON.stringify(respData) || err.message || "更新に失敗しました");
         } finally {

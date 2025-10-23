@@ -51,8 +51,9 @@ export default function PostList() {
             setPostList(fetchedPosts);
 
             setHasNextPage(fetchedPosts.length === 10);
-        } catch (error) {
-            console.error("投稿一覧取得中にエラー:", error);
+        } catch (err) {
+            // ポスト一覧を取得できなかった際にコンソール表示
+            console.error("投稿一覧取得中にエラー:", err);
         }
     };
 

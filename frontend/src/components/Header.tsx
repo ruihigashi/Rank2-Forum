@@ -20,7 +20,6 @@ export default function Header() {
                 const user = await getUser(userInfo.id, userInfo.token);
                 setUserName(user.name);
             } catch (err) {
-                console.error('ユーザー取得エラー', err);
                 setUserName("");
             }
         };
@@ -35,7 +34,6 @@ export default function Header() {
             setUserDetails(user);
             setShowModal(true);
         } catch (err) {
-            console.error('ユーザー詳細取得エラー', err);
             alert('ユーザー情報の取得に失敗しました');
         }
     }

@@ -15,7 +15,6 @@ export default function SideBar() {
 
     const getPostList = async () => {
         const posts = await getList(userInfo.token);
-        console.log(posts);
         let postList: Array<PostType> = [];
         if (posts) {
             posts.posts.forEach((p: PostType) => {

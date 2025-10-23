@@ -45,7 +45,6 @@ export default function Post(props: { post: PostType }) {
             const filtered = postList.filter((p: PostType) => p.id !== post.id);
             setPostList(filtered);
         } catch (err) {
-            console.error('削除エラー', err);
             alert('削除に失敗しました');
         }
     }
