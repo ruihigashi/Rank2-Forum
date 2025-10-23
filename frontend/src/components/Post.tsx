@@ -1,8 +1,9 @@
 import React, { ReactNode, useContext } from "react";
 import deleteButton from "../asset/img/deleteButton.png"
-import { PostListContext, PostType } from "../providers/PostListContext";
+import { PostListContext } from "../providers/PostListContext";
 import { UserContext } from "../providers/UserProvider";
 import { deletePost } from "../api/Post";
+import { PostType } from "../types/Post";
 
 export default function Post(props: { post: PostType }) {
     const { post } = props;

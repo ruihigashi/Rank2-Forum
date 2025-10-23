@@ -1,5 +1,5 @@
 import { useContext, useEffect, useRef, useState } from "react"
-import { PostListContext, PostType } from "../providers/PostListContext"
+import { PostListContext } from "../providers/PostListContext"
 import { UserContext } from "../providers/UserProvider";
 import { getList } from "../api/Post";
 import Post from "./Post";
@@ -7,6 +7,7 @@ import reloadButton from "../asset/img/reloadButton.png"
 import backButton from "../asset/img/backPageButton.png"
 import nextButton from "../asset/img/nextPageButton.png"
 import Search from "./Search";
+import { PostType } from "../types/Post";
 
 export default function PostList() {
     // ポストリストコンテキスト、ユーザーコンテキストを使用する

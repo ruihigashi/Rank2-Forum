@@ -2,9 +2,10 @@ import { useContext, useEffect, useState } from "react";
 import { getList, post } from "../api/Post";
 import { getUser } from "../api/User";
 import userDetail2 from "../asset/img/userDetaiButton2.png";
-import { PostListContext, PostType } from "../providers/PostListContext";
+import { PostListContext } from "../providers/PostListContext";
 import { UserContext } from "../providers/UserProvider";
 import PostInput from "./PostInput";
+import { PostType } from "../types/Post";
 
 export default function SideBar() {
     const { userInfo } = useContext(UserContext); // コンテキストからuserInfoを取り出す

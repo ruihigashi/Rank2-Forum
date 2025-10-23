@@ -4,3 +4,8 @@ export type UserType = {
     umail: string;
     created_at: string;
 }
+
+export type UserInfo = {
+    id: number;
+    token: string;
+}

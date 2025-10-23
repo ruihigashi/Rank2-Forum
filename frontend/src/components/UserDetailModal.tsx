@@ -1,17 +1,10 @@
 import { useEffect, useState } from "react";
 import closeModal from "../asset/img/closeModalButton.png"
 import { updateUser } from "../api/User";
-import { UserType } from "../types/User";
+import { ModalProps } from "../types/Props";
 
-type Props = {
-    show: boolean;
-    onClose: () => void;
-    userDetails: UserType | null;
-    onUpdated?: (updated: UserType) => void;
-    token?: string;
-};
 
-export default function UserDetailModal({ show, onClose, userDetails, onUpdated, token }: Props) {
+export default function UserDetailModal({ show, onClose, userDetails, onUpdated, token }: ModalProps) {
     const [editing, setEditing] = useState(false);
     const [name, setName] = useState("");
     const [email, setEmail] = useState("");
