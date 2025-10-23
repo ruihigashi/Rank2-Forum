@@ -1,10 +1,10 @@
 import React, { ReactNode, useContext } from "react";
 import deleteButton from "../asset/img/deleteButton.png"
-import { PostListContext } from "../providers/PostListContext";
+import { PostListContext, PostType } from "../providers/PostListContext";
 import { UserContext } from "../providers/UserProvider";
 import { deletePost } from "../api/Post";
 
-export default function Post(props: any) {
+export default function Post(props: { post: PostType }) {
     const { post } = props;
     // ユーザー情報と投稿一覧のコンテキストをトップレベルで取得
     const { userInfo } = useContext(UserContext);
@@ -41,7 +41,7 @@ export default function Post(props: any) {
             await deletePost(post.id, userInfo.token);
 
             // ローカルの投稿一覧から該当投稿を取り除いてUIを更新
-            const filtered = postList.filter((p: any) => p.id !== post.id);
+            const filtered = postList.filter((p: PostType) => p.id !== post.id);
             setPostList(filtered);
         } catch (err) {
             console.error('削除エラー', err);

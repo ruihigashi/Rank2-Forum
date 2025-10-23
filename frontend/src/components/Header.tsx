@@ -4,13 +4,14 @@ import userDetail from "../asset/img/userDetailButton.png";
 import { UserContext } from "../providers/UserProvider";
 import LogoutButton from "./LogoutButton";
 import UserDetailModal from "./UserDetailModal";
+import { UserType } from "../types/User";
 
 export default function Header() {
     const [userName, setUserName] = useState("");
     // モーダル表示のための状態を追加
     const [showModal, setShowModal] = useState(false);
     // モーダル内で表示するユーザー詳細を保持する状態
-    const [userDetails, setUserDetails] = useState<any>(null);
+    const [userDetails, setUserDetails] = useState<UserType | null>(null);
     const { userInfo } = useContext(UserContext);
 
     useEffect(() => {
@@ -60,7 +61,7 @@ export default function Header() {
                 </div>
             </div>
 
-            <UserDetailModal show={showModal} onClose={closeUserModal} userDetails={userDetails} onUpdated={(u:any)=>{ setUserName(u.name); }} token={userInfo.token} />
+            <UserDetailModal show={showModal} onClose={closeUserModal} userDetails={userDetails} onUpdated={(u: UserType)=>{ setUserName(u.name); }} token={userInfo.token} />
         </>
     );
 }

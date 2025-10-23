@@ -17,7 +17,7 @@ export default function SideBar() {
         console.log(posts);
         let postList: Array<PostType> = [];
         if (posts) {
-            posts.posts.forEach((p: any) => {
+            posts.posts.forEach((p: PostType) => {
                 postList.push({
                     id: p.id,
                     user_name: p.user_name,
