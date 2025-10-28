@@ -5,6 +5,7 @@ import { User } from 'src/entities/user.entity';
 import { Equal, Repository } from 'typeorm';
 import * as bcrypt from 'bcrypt';
 import * as crypto from 'crypto';
+import { AuthDto } from './dto/auth.dto';
 
 @Injectable()
 export class AuthService {
@@ -16,13 +17,13 @@ export class AuthService {
         private authRepository: Repository<Auth>,
     ) { }
 
-    async getAuth(name: string, password: string) {
+    async getAuth(authDto: AuthDto) {
         // name, passwordからUserレコード検索
-        if (!password) {
+        if (!authDto.password) {
             throw new UnauthorizedException(); // パスワードが指定されていない場合は認証失敗
         }
         // まずメールアドレスでユーザーを検索する
-        const user = await this.userRepository.findOne({ where: { umail: Equal(name) } });
+        const user = await this.userRepository.findOne({ where: { umail: Equal(authDto.umail) } });
 
         // ユーザーが見つからなければ認証失敗
         if (!user) {
@@ -30,7 +31,7 @@ export class AuthService {
         }
 
         // bcrypt.compareで見つかったユーザーのハッシュとパスワードを比較
-        const isMatch = await bcrypt.compare(password, user.hash);
+        const isMatch = await bcrypt.compare(authDto.password, user.hash);
 
         // パスワードが一致しなければ認証失敗
         if (!isMatch) {

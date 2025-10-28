@@ -1,4 +1,4 @@
-import React, { Dispatch, SetStateAction, useState, createContext } from "react";
+import { Dispatch, SetStateAction, useState, createContext } from "react";
 import { PostType } from "../types/Post";
 import { ChildrenProps } from "../types/Props";
 
