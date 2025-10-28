@@ -1,7 +1,24 @@
+import { IsEmail, IsOptional, IsString, MaxLength, IsDateString, IsNumber, IsInt } from "class-validator";
+
 export class UpdateUserDto {
-    name: string;
-    email: string;
-    created_at: string;
-    id: number;
-    token: string;
+    @IsOptional()
+    @IsString()
+    @MaxLength(50)
+    name?: string;
+
+    @IsOptional()
+    @IsEmail()
+    email?: string;
+
+    @IsOptional()
+    @IsDateString()
+    created_at?: string;
+
+    @IsOptional()
+    @IsNumber()
+    id?: number;
+
+    @IsOptional()
+    @IsString()
+    token?: string;
 }
